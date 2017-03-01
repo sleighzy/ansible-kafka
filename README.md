@@ -1,5 +1,7 @@
 # Apache Kafka
 
+[![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
+
 Ansible role to install and configure [Apache Kafka][1] on RHEL / CentOS 7.
 
 [Apache Kafka][1] is a message bus using publish-subscribe topics. Other components and products can consume these messages by subscribing to these topics. Kafka is extremely fast, handling megabytes of reads and writes per second from thousands of clients. Messages are persisted and replicated to prevent data loss. Data streams are partitioned and can be elastically scaled with no downtime.
