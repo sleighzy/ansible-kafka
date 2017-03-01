@@ -1,0 +1,77 @@
+---
+
+# The Apache Kafka version to be downloaded and installed
+kafka_version: 0.10.1.0
+kafka_scala_version: 2.11
+
+# The kafka user and group to create files/dirs with and for running the kafka service
+kafka_user: kafka
+kafka_group: kafka
+
+kafka_dir: /usr/share/kafka
+
+############################# Server #############################
+
+# The id of the broker. This must be set to a unique integer for each broker.
+kafka_broker_id: 0
+
+# The address the socket server listens on. It will get the value returned from
+# java.net.InetAddress.getCanonicalHostName() if not configured.
+#   FORMAT:
+#     listeners = security_protocol://host_name:port
+#   EXAMPLE:
+#     listeners = PLAINTEXT://your.host.name:9092
+#listeners=PLAINTEXT://:9092
+kafka_listener_protocol: PLAINTEXT
+kafka_listener_hostname: localhost
+kafka_listener_port: 9092
+
+# The number of threads handling network requests
+kafka_num_network_threads: 3
+
+# A comma seperated list of directories under which to store log files
+kafka_log_dirs: /var/lib/kafka/logs
+
+# The default number of log partitions per topic. More partitions allow greater
+# parallelism for consumption, but this will also result in more files across
+# the brokers.
+kafka_num_partitions: 1
+
+# The minimum age of a log file to be eligible for deletion
+kafka_log_retention_hours: 168
+
+# Enable auto creation of topic on the server
+kafka_auto_create_topics_enable: true
+
+# Enables delete topic. Delete topic through the admin tool will have no
+# effect if this config is turned off
+kafka_delete_topic_enable: true
+
+# Default replication factor for automatically created topics.
+kafka_default_replication_factor: 1
+
+
+############################# Zookeeper #############################
+
+# Zookeeper connection string (see zookeeper docs for details).
+# This is a comma separated host:port pairs, each corresponding to a zk
+# server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
+# You can also append an optional chroot string to the urls to specify the
+# root directory for all kafka znodes.
+kafka_zookeeper_connect: 'localhost:2181'
+
+# Timeout in ms for connecting to zookeeper
+kafka_zookeeper_connection_timeout: 6000
+
+
+############################# Producer #############################
+
+# list of brokers used for bootstrapping knowledge about the rest of the cluster
+# format: host1:port1,host2:port2 ...
+kafka_bootstrap_servers: 'localhost:9092'
+
+
+############################# Consumer #############################
+
+#consumer group id
+kafka_consumer_group_id: kafka-consumer-group

@@ -1,0 +1,47 @@
+---
+
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  # Pull a CentOS image with systemd installed
+  - docker pull centos/systemd
+
+install:
+  # Run the container in detached mode. The usage of privileged, mounting cgroup volumes and /usr/lib/systemd/systemd are required so that systemd can be
+  # used without the "Failed to get D-Bus connection: Operation not permitted" error occurring when running commands, e.g. systemctl daemon-reload
+  - docker run --privileged --detach --volume="${PWD}":/etc/ansible/roles/ansible-kafka:ro --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --name kafka centos/systemd /usr/lib/systemd/systemd
+  # Install the EPEL packages
+  - docker exec kafka yum -y install epel-release
+  # Install the Ansible packages
+  - docker exec kafka yum -y install ansible
+
+script:
+  # Install role dependencies.
+  - docker exec kafka ansible-galaxy install -r /etc/ansible/roles/ansible-kafka/tests/requirements.yml
+  # Check syntax of Ansible role
+  - docker exec kafka ansible-playbook /etc/ansible/roles/ansible-kafka/tests/test.yaml --syntax-check
+  # Run Ansible role
+  - docker exec kafka ansible-playbook /etc/ansible/roles/ansible-kafka/tests/test.yaml --verbose
+  # Check that the zookeeper service is running
+  - docker exec kafka systemctl status zookeeper 2>&1 | awk 'FNR == 3 {print}' | grep "active (running)" && (echo "ZooKeeper service running - pass" && exit 0) || (echo "ZooKeeper service running - fail" && exit 1)
+  # Check that the kafka service is running
+  - docker exec kafka systemctl status kafka 2>&1 | awk 'FNR == 3 {print}' | grep "active (running)" && (echo "Kafka service running - pass" && exit 0) || (echo "Kafka service running - fail" && exit 1)
+  # Check that a Znode can be successfully created, this is to ensure that ZooKeeper is up and functioning
+  - docker exec kafka /usr/share/zookeeper/bin/zkCli.sh create /TestZnode1 "test-node-1" 2>&1 | awk -F\" '/Created/ {print $1}' | grep "Created" && (echo "Znode ceate test - pass" && exit 0) || (echo "Znode create test - fail" && exit 1)
+  # Create a Kafka topic named "test" and confirm that it was created successfully, send a message to it, and then consume from this topic to check if the message was sent successfully
+  - docker exec kafka /usr/share/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+  - docker exec kafka /usr/share/kafka/bin/kafka-topics.sh --list --zookeeper localhost:2181  2>&1 | awk 'FNR == 1 {print}' | grep "test" && (echo "Topic created - pass" && exit 0) || (echo "Topic created - fail" && exit 1)
+  # Send a test message to this topic
+  - docker exec kafka sh -c 'echo "test message" | /usr/share/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test'
+  # Consume the message from the topic to confirm it was sent successfully
+  - docker exec kafka /usr/share/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning --max-messages 1 --new-consumer --bootstrap-server localhost:9092 2>&1 | awk 'FNR == 1 {print}' | grep "test message" && (echo "Message consumed - pass" && exit 0) || (echo "Message consumed - fail" && exit 1)
+
+after_script:
+  - docker stop kafka && docker rm kafka
+
+notifications:
+  email:
+    - giveit@gmail.com
