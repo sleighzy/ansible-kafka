@@ -43,5 +43,4 @@ after_script:
   - docker stop kafka && docker rm kafka
 
 notifications:
-  email:
-    - giveit@gmail.com
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
