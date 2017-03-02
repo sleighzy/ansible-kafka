@@ -37,7 +37,7 @@ script:
   # Send a test message to this topic
   - docker exec kafka sh -c 'echo "test message" | /usr/share/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test'
   # Consume the message from the topic to confirm it was sent successfully
-  - docker exec kafka /usr/share/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning --max-messages 1 --new-consumer --bootstrap-server localhost:9092 2>&1 | awk 'FNR == 1 {print}' | grep "test message" && (echo "Message consumed - pass" && exit 0) || (echo "Message consumed - fail" && exit 1)
+  - docker exec kafka /usr/share/kafka/bin/kafka-console-consumer.sh --topic test --from-beginning --max-messages 1 --new-consumer --bootstrap-server localhost:9092 2>&1 | awk 'FNR == 1 {print}' | grep "test message" && (echo "Message consumed - pass" && exit 0) || (echo "Message consumed - fail" && exit 1)
 
 after_script:
   - docker stop kafka && docker rm kafka
