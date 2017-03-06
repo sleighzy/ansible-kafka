@@ -1,5 +1,8 @@
 ---
 
+- name: Reload kafka systemd
+  command: systemctl daemon-reload
+
 - name: Restart kafka service
   service:
     name: kafka
