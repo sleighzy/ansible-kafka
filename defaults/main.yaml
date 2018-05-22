@@ -37,6 +37,14 @@ kafka_advertised_listener_port: '{{ kafka_listener_port }}'
 
 # The number of threads handling network requests
 kafka_num_network_threads: 3
+# The number of threads that the server uses for processing requests, which may include disk I/O
+kafka_num_io_threads: 8
+# The send buffer (SO_SNDBUF) used by the socket server
+kafka_socket_send_buffer_bytes: 102400
+# The receive buffer (SO_RCVBUF) used by the socket server
+kafka_socket_receive_buffer_bytes: 102400
+# The maximum size of a request that the socket server will accept (protection against OOM)
+kafka_socket_request_max_bytes: 104857600
 
 # A comma seperated list of directories under which to store log files
 kafka_log_dirs: /var/lib/kafka/logs
@@ -46,8 +54,25 @@ kafka_log_dirs: /var/lib/kafka/logs
 # the brokers.
 kafka_num_partitions: 1
 
+# The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
+# This value is recommended to be increased for installations with data dirs located in RAID array.
+kafka_num_recovery_threads_per_data_dir: 1
+
+# The replication factor for the group metadata internal topics "__consumer_offsets" and "__transaction_state"
+# For anything other than development testing, a value greater than 1 is recommended for to ensure availability such as 3.
+kafka_offsets_topic_replication_factor: 1
+kafka_transaction_state_log_replication_factor: 1
+kafka_transaction_state_log_min_isr: 1
+
 # The minimum age of a log file to be eligible for deletion
 kafka_log_retention_hours: 168
+
+# The maximum size of a log segment file. When this size is reached a new log segment will be created.
+kafka_log_segment_bytes: 1073741824
+
+# The interval at which log segments are checked to see if they can be deleted according
+# to the retention policies
+kafka_log_retention_check_interval_ms: 300000
 
 # Enable auto creation of topic on the server
 kafka_auto_create_topics_enable: false
@@ -58,6 +83,8 @@ kafka_delete_topic_enable: true
 
 # Default replication factor for automatically created topics.
 kafka_default_replication_factor: 1
+
+kafka_group_initial_rebalance_delay_ms: 0
 
 
 ############################# Zookeeper #############################
@@ -70,7 +97,7 @@ kafka_default_replication_factor: 1
 kafka_zookeeper_connect: 'localhost:2181'
 
 # Timeout in ms for connecting to zookeeper
-kafka_zookeeper_connection_timeout: 6000
+kafka_zookeeper_connection_timeout_ms: 6000
 
 # the directory where the snapshot is stored.
 kafka_zookeeper_data_dir: /tmp/zookeeper
@@ -97,6 +124,8 @@ kafka_connect_config_storage_replication_factor: 1
 kafka_connect_status_storage_replication_factor: 1
 kafka_connect_offset_flush_interval_ms: 10000
 kafka_connect_plugin_path: /usr/local/share/java,/usr/local/share/kafka/plugins,/opt/connectors
+
+kafka_connect_offset_storage_file_filename: /tmp/connect.offsets
 
 
 ############################# Producer #############################
