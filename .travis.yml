@@ -11,10 +11,10 @@ before_install:
 
 install:
   # Install Ansible on host
-  - pip install ansible
+  - pip install ansible --user
 
   # Install version 1.9 of docker-py, later versions fail version checking
-  - pip install docker-py==1.9.0
+  - pip install docker-py==1.9.0 --user
 
   # Add ansible.cfg to pick up roles path.
   - printf '[defaults]\nroles_path = ../' > ansible.cfg

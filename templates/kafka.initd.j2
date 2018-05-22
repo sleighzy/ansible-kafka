@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# kafka    Apache Kafka
+#
+# chkconfig: 345 20 80
+# description: Apache Kafka
+# processname: kafka
+
+# Source function library.
+. /etc/init.d/functions
+
+RETVAL=0
+prog="kafka"
+LOCKFILE=/var/lock/subsys/$prog
+
+# Declare variables for Kafka
+KAFKA_HOME_DIR={{ kafka_dir }}
+
+start() {
+        echo -n "Starting $prog: "
+        $KAFKA_HOME_DIR/bin/kafka-start-server.sh $KAFKA_HOME_DIR/config/server.properties
+        RETVAL=$?
+        [ $RETVAL -eq 0 ] && touch $LOCKFILE
+        echo
+        return $RETVAL
+}
+
+stop() {
+        echo -n "Shutting down $prog: "
+        $KAFKA_HOME_DIR/bin/kafka-stop-server.sh && success || failure
+        RETVAL=$?
+        [ $RETVAL -eq 0 ] && rm -f $LOCKFILE
+        echo
+        return $RETVAL
+}
+
+status() {
+        echo -n "Checking $prog status: "
+
+        # TODO
+        #RETVAL=$?
+        return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
+exit $RETVAL

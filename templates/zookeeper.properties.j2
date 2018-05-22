@@ -14,15 +14,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# see org.apache.kafka.clients.consumer.ConsumerConfig for more details
-
-# list of brokers used for bootstrapping knowledge about the rest of the cluster
-# format: host1:port1,host2:port2 ...
-bootstrap.servers={{ kafka_consumer_bootstrap_servers }}
-
-# consumer group id
-group.id={{ kafka_consumer_group_id }}
-
-# What to do when there is no initial offset in Kafka or if the current
-# offset does not exist any more on the server: latest, earliest, none
-#auto.offset.reset=
+# the directory where the snapshot is stored.
+dataDir={{ kafka_zookeeper_data_dir }}
+# the port at which the clients will connect
+clientPort={{ kafka_zookeeper_client_port }}
+# disable the per-ip limit on the number of connections since this is a non-production config
+maxClientCnxns={{ kafka_zookeeper_max_client_cnxns }}

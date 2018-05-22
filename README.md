@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
 
-Ansible role to install and configure [Apache Kafka][1] on RHEL / CentOS 7.
+Ansible role to install and configure [Apache Kafka][1] on RHEL / CentOS 6 and 7.
 
 [Apache Kafka][1] is a message bus using publish-subscribe topics. Other components and products can consume these messages by subscribing to these topics. Kafka is extremely fast, handling megabytes of reads and writes per second from thousands of clients. Messages are persisted and replicated to prevent data loss. Data streams are partitioned and can be elastically scaled with no downtime.
 
 ## Requirements
 
-Platform: RHEL / CentOS 7
+Platform: RHEL / CentOS 6 and 7
 
 Java: Oracle JDK
 
@@ -23,14 +23,15 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 `$ ansible-galaxy install sleighzy.zookeeper`
 
 ## Role Variables
-    kafka_version: 0.10.1.0
+    kafka_version: 1.1.0
     kafka_scala_version: 2.11
+    kafka_root_dir: /opt
+    kafka_dir: '{{ kafka_root_dir }}/kafka'
     kafka_broker_id: 0
     kafka_listener_protocol: PLAINTEXT
     kafka_listener_hostname: localhost
     kafka_listener_port: 9092
     kafka_num_network_threads: 3
-    kafka_dir: /usr/share/kafka
     kafka_log_dirs: /var/lib/kafka-logs
     kafka_num_partitions: 1
     kafka_log_retention_hours: 168
@@ -42,9 +43,13 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
     kafka_bootstrap_servers: 'localhost:9092'
     kafka_consumer_group_id: kafka-consumer-group
 
-## Starting and Stopping Kafka Services
+## Starting and Stopping Kafka services using systemd
 * The Kafka service can be started via: `systemctl start kafka`
 * The Kafka service can be stopped via: `systemctl stop kafka`
+
+## Starting and Stopping Kafka services using initd
+* The Kafka service can be started via: `service kafka start`
+* The Kafka service can be stopped via: `service kafka stop`
 
 ## Default Properties
 
@@ -56,7 +61,7 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 | Kafka broker id | 0 |
 | Number of partitions | 1 |
 | Data log file retention period | 168 hours |
-| Enable auto topic creation | true |
+| Enable auto topic creation | false |
 | Enable topic deletion | true |
 
 #### Ports
@@ -70,8 +75,8 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 
 | Directory / File | |
 |-----|----|
-| Kafka installation directory (symlink to installed version) | `/usr/share/kafka` |
-| Kafka configuration file | `/usr/share/kafka/config/server.properties` |
+| Kafka installation directory (symlink to installed version) | `/opt/kafka` |
+| Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka` |
 | Directory to store data files | `/var/lib/kafka/logs` |
 | Kafka service | `/usr/lib/systemd/system/kafka.service` |
 

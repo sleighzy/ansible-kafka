@@ -18,7 +18,7 @@
 
 - name: Check if Kafka has already been downloaded and unpacked
   stat:
-    path: /usr/share/kafka_{{ kafka_scala_version }}-{{ kafka_version }}
+    path: '{{ kafka_dir }}_{{ kafka_scala_version }}-{{ kafka_version }}'
   register: dir
 
 - name: Download Apache Kafka
@@ -32,7 +32,7 @@
 - name: Unpack Apache Kafka
   unarchive:
     src: /tmp/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz
-    dest: /usr/share
+    dest: '{{ kafka_root_dir }}'
     copy: no
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
@@ -42,7 +42,7 @@
 
 - name: Create symlink to kafka installation directory
   file:
-    src: /usr/share/kafka_{{ kafka_scala_version }}-{{ kafka_version }}
+    src: '{{ kafka_root_dir }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}'
     dest: '{{ kafka_dir }}'
     state: link
     group: '{{ kafka_group }}'
@@ -77,12 +77,31 @@
   tags:
     - kafka_config
 
+- name: Template configuration file to zookeeper.properties
+  template:
+    src: zookeeper.properties.j2
+    dest: '{{ kafka_dir }}/config/zookeeper.properties'
+  tags:
+    - kafka_config
+
+- name: Template configuration file to connect-standalone.properties
+  template:
+    src: connect-standalone.properties.j2
+    dest: '{{ kafka_dir }}/config/connect-standalone.properties'
+  tags:
+    - kafka_config
+
+- name: Template configuration file to connect-distributed.properties
+  template:
+    src: connect-distributed.properties.j2
+    dest: '{{ kafka_dir }}/config/connect-distributed.properties'
+  tags:
+    - kafka_config
+
 - name: Template configuration file to producer.properties
   template:
     src: producer.properties.j2
     dest: '{{ kafka_dir }}/config/producer.properties'
-  notify:
-    - Restart kafka service
   tags:
     - kafka_config
 
@@ -90,8 +109,6 @@
   template:
     src: consumer.properties.j2
     dest: '{{ kafka_dir }}/config/consumer.properties'
-  notify:
-    - Restart kafka service
   tags:
     - kafka_config
 
@@ -99,6 +116,26 @@
   file:
     src: '{{ kafka_dir }}/config/server.properties'
     dest: /etc/kafka/server.properties
+    state: link
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+  tags:
+    - kafka_config
+
+- name: Create symlink to kafka connect standalone properties file
+  file:
+    src: '{{ kafka_dir }}/config/connect-standalone.properties'
+    dest: /etc/kafka/connect-standalone.properties
+    state: link
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+  tags:
+    - kafka_config
+
+- name: Create symlink to kafka connect distributed properties file
+  file:
+    src: '{{ kafka_dir }}/config/connect-distributed.properties'
+    dest: /etc/kafka/connect-distributed.properties
     state: link
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
@@ -125,13 +162,26 @@
   tags:
     - kafka_config
 
+- name: Template Kafka init.d service file
+  template:
+    src: kafka.initd.j2
+    dest: /etc/init.d/kafka
+    mode: 0755
+  notify:
+    - Reload initd
+    - Restart kafka service
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == '6'
+  tags:
+    - kafka_service
+
 - name: Template kafka systemd service file to /usr/lib/systemd/system/kafka.service
   template:
     src: kafka.service.j2
     dest: /usr/lib/systemd/system/kafka.service
   notify:
-    - Reload kafka systemd
+    - Reload systemd
     - Restart kafka service
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
   tags:
     - kafka_service
 

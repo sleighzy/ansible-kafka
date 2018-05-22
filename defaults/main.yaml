@@ -1,14 +1,15 @@
 ---
 
 # The Apache Kafka version to be downloaded and installed
-kafka_version: 0.10.1.0
+kafka_version: 1.1.0
 kafka_scala_version: 2.11
 
 # The kafka user and group to create files/dirs with and for running the kafka service
 kafka_user: kafka
 kafka_group: kafka
 
-kafka_dir: /usr/share/kafka
+kafka_root_dir: /opt
+kafka_dir: '{{ kafka_root_dir }}/kafka'
 
 ############################# Server #############################
 
@@ -26,6 +27,14 @@ kafka_listener_protocol: PLAINTEXT
 kafka_listener_hostname: localhost
 kafka_listener_port: 9092
 
+# Hostname and port the broker will advertise to producers and consumers. If not set,
+# it uses the value for "listeners" if configured.  Otherwise, it will use the value
+# returned from java.net.InetAddress.getCanonicalHostName().
+#advertised.listeners=PLAINTEXT://your.host.name:9092
+kafka_advertised_listener_protocol: '{{ kafka_listener_protocol }}'
+kafka_advertised_listener_hostname: '{{ kafka_listener_hostname }}'
+kafka_advertised_listener_port: '{{ kafka_listener_port }}'
+
 # The number of threads handling network requests
 kafka_num_network_threads: 3
 
@@ -41,7 +50,7 @@ kafka_num_partitions: 1
 kafka_log_retention_hours: 168
 
 # Enable auto creation of topic on the server
-kafka_auto_create_topics_enable: true
+kafka_auto_create_topics_enable: false
 
 # Enables delete topic. Delete topic through the admin tool will have no
 # effect if this config is turned off
@@ -63,15 +72,40 @@ kafka_zookeeper_connect: 'localhost:2181'
 # Timeout in ms for connecting to zookeeper
 kafka_zookeeper_connection_timeout: 6000
 
+# the directory where the snapshot is stored.
+kafka_zookeeper_data_dir: /tmp/zookeeper
+# the port at which the clients will connect
+kafka_zookeeper_client_port: 2181
+# disable the per-ip limit on the number of connections since this is a non-production config
+kafka_zookeeper_max_client_cnxns: 0
+
+
+########################### Kafka Connect #############################
+
+kafka_connect_bootstrap_servers: 'localhost:9092'
+kafka_connect_group_id: connect-cluster
+kafka_connect_key_converter: org.apache.kafka.connect.json.JsonConverter
+kafka_connect_value_converter: org.apache.kafka.connect.json.JsonConverter
+kafka_connect_key_converter_schemas_enable: true
+kafka_connect_value_converter_schemas_enable: true
+kafka_connect_internal_key_converter: org.apache.kafka.connect.json.JsonConverter
+kafka_connect_internal_value_converter: org.apache.kafka.connect.json.JsonConverter
+kafka_connect_internal_key_converter_schemas_enable: false
+kafka_connect_internal_value_converter_schemas_enable: false
+kafka_connect_offset_storage_replication_factor: 1
+kafka_connect_config_storage_replication_factor: 1
+kafka_connect_status_storage_replication_factor: 1
+kafka_connect_offset_flush_interval_ms: 10000
+kafka_connect_plugin_path: /usr/local/share/java,/usr/local/share/kafka/plugins,/opt/connectors
+
 
 ############################# Producer #############################
 
-# list of brokers used for bootstrapping knowledge about the rest of the cluster
-# format: host1:port1,host2:port2 ...
-kafka_bootstrap_servers: 'localhost:9092'
+kafka_producer_bootstrap_servers: 'localhost:9092'
+kafka_producer_compression_type: none
 
 
 ############################# Consumer #############################
 
-#consumer group id
 kafka_consumer_group_id: kafka-consumer-group
+kafka_consumer_bootstrap_servers: 'localhost:9092'
