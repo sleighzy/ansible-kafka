@@ -81,19 +81,19 @@ script:
     || (echo "Znode create test - fail" && exit 1)
 
   # Create a Kafka topic named "test" using node 1 and confirm that it was created successfully
-  - docker exec kafka-1 /usr/share/kafka/bin/kafka-topics.sh --create --zookeeper zookeeper-1:2181 --replication-factor 1 --partitions 1 --topic test
+  - docker exec kafka-1 /opt/kafka/bin/kafka-topics.sh --create --zookeeper zookeeper-1:2181 --replication-factor 1 --partitions 1 --topic test
   - >
-    docker exec kafka-1 /usr/share/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper-1:2181 2>&1
+    docker exec kafka-1 /opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper-1:2181 2>&1
     | awk 'FNR == 1 {print}' | grep "test"
     && (echo "Topic created - pass" && exit 0)
     || (echo "Topic created - fail" && exit 1)
 
   # Send a test message to this topic using node 2
-  - docker exec kafka-2 sh -c 'echo "test message" | /usr/share/kafka/bin/kafka-console-producer.sh --broker-list kafka-2:9092 --topic test'
+  - docker exec kafka-2 sh -c 'echo "test message" | /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka-2:9092 --topic test'
 
   # Consume the message from the topic using node 3 to confirm it was sent successfully
   - >
-    docker exec kafka-3 /usr/share/kafka/bin/kafka-console-consumer.sh --topic test --from-beginning --max-messages 1 --new-consumer --bootstrap-server kafka-3:9092 2>&1
+    docker exec kafka-3 /opt/kafka/bin/kafka-console-consumer.sh --topic test --from-beginning --max-messages 1 --new-consumer --bootstrap-server kafka-3:9092 2>&1
     | awk 'FNR == 1 {print}' | grep "test message"
     && (echo "Message consumed - pass" && exit 0)
     || (echo "Message consumed - fail" && exit 1)
