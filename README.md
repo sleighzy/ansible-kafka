@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
 
-Ansible role to install and configure [Apache Kafka][1] on RHEL / CentOS 6 and 7.
+Ansible role to install and configure [Apache Kafka][1] 2.0.0 on RHEL / CentOS 6 and 7.
 
 [Apache Kafka][1] is a message bus using publish-subscribe topics. Other components and products can consume these messages by subscribing to these topics. Kafka is extremely fast, handling megabytes of reads and writes per second from thousands of clients. Messages are persisted and replicated to prevent data loss. Data streams are partitioned and can be elastically scaled with no downtime.
 
@@ -23,7 +23,7 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 `$ ansible-galaxy install sleighzy.zookeeper`
 
 ## Role Variables
-    kafka_version: 1.1.0
+    kafka_version: 2.0.0
     kafka_scala_version: 2.11
     kafka_root_dir: /opt
     kafka_dir: '{{ kafka_root_dir }}/kafka'
