@@ -79,8 +79,11 @@
     with_indexed_items: "{{ groups['kafka-nodes'] }}"
 
 - hosts: all
-  roles:
-    - java
+  tasks:
+  - name: Install Java 8 (OpenJDK)
+    yum:
+      name: java-1.8.0-openjdk
+      state: latest
 
 - hosts: zookeeper-nodes
   roles:

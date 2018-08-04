@@ -10,7 +10,7 @@ Ansible role to install and configure [Apache Kafka][1] 2.0.0 on RHEL / CentOS 6
 
 Platform: RHEL / CentOS 6 and 7
 
-Java: Oracle JDK
+Java: Java 8
 
 The Oracle Java 8 JDK role from Ansible Galaxy can be used if one is needed.
 

@@ -1,5 +1,2 @@
-- src: sleighzy.java-8
-  name: java
-
 - src: sleighzy.zookeeper
   name: zookeeper
