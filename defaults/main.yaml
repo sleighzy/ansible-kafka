@@ -1,15 +1,14 @@
 ---
-
 # The Apache Kafka version to be downloaded and installed
-kafka_version: 2.0.0
-kafka_scala_version: 2.11
+kafka_version: 2.3.0
+kafka_scala_version: 2.12
 
 # The kafka user and group to create files/dirs with and for running the kafka service
 kafka_user: kafka
 kafka_group: kafka
 
 kafka_root_dir: /opt
-kafka_dir: '{{ kafka_root_dir }}/kafka'
+kafka_dir: "{{ kafka_root_dir }}/kafka"
 
 ############################# Server #############################
 
@@ -31,9 +30,9 @@ kafka_listener_port: 9092
 # it uses the value for "listeners" if configured.  Otherwise, it will use the value
 # returned from java.net.InetAddress.getCanonicalHostName().
 #advertised.listeners=PLAINTEXT://your.host.name:9092
-kafka_advertised_listener_protocol: '{{ kafka_listener_protocol }}'
-kafka_advertised_listener_hostname: '{{ kafka_listener_hostname }}'
-kafka_advertised_listener_port: '{{ kafka_listener_port }}'
+kafka_advertised_listener_protocol: "{{ kafka_listener_protocol }}"
+kafka_advertised_listener_hostname: "{{ kafka_listener_hostname }}"
+kafka_advertised_listener_port: "{{ kafka_listener_port }}"
 
 # The number of threads handling network requests
 kafka_num_network_threads: 3
@@ -86,7 +85,6 @@ kafka_default_replication_factor: 1
 
 kafka_group_initial_rebalance_delay_ms: 0
 
-
 ############################# Zookeeper #############################
 
 # Zookeeper connection string (see zookeeper docs for details).
@@ -94,7 +92,7 @@ kafka_group_initial_rebalance_delay_ms: 0
 # server. e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002".
 # You can also append an optional chroot string to the urls to specify the
 # root directory for all kafka znodes.
-kafka_zookeeper_connect: 'localhost:2181'
+kafka_zookeeper_connect: "localhost:2181"
 
 # Timeout in ms for connecting to zookeeper
 kafka_zookeeper_connection_timeout_ms: 6000
@@ -106,10 +104,9 @@ kafka_zookeeper_client_port: 2181
 # disable the per-ip limit on the number of connections since this is a non-production config
 kafka_zookeeper_max_client_cnxns: 0
 
-
 ########################### Kafka Connect #############################
 
-kafka_connect_bootstrap_servers: 'localhost:9092'
+kafka_connect_bootstrap_servers: "localhost:9092"
 kafka_connect_group_id: connect-cluster
 kafka_connect_key_converter: org.apache.kafka.connect.json.JsonConverter
 kafka_connect_value_converter: org.apache.kafka.connect.json.JsonConverter
@@ -127,14 +124,12 @@ kafka_connect_plugin_path: /usr/local/share/java,/usr/local/share/kafka/plugins,
 
 kafka_connect_offset_storage_file_filename: /tmp/connect.offsets
 
-
 ############################# Producer #############################
 
-kafka_producer_bootstrap_servers: 'localhost:9092'
+kafka_producer_bootstrap_servers: "localhost:9092"
 kafka_producer_compression_type: none
-
 
 ############################# Consumer #############################
 
 kafka_consumer_group_id: kafka-consumer-group
-kafka_consumer_bootstrap_servers: 'localhost:9092'
+kafka_consumer_bootstrap_servers: "localhost:9092"

@@ -2,9 +2,15 @@
 
 [![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
 
-Ansible role to install and configure [Apache Kafka][1] 2.0.0 on RHEL / CentOS 6 and 7.
+Ansible role to install and configure [Apache Kafka][1] 2.0.0 on RHEL / CentOS 6
+and 7.
 
-[Apache Kafka][1] is a message bus using publish-subscribe topics. Other components and products can consume these messages by subscribing to these topics. Kafka is extremely fast, handling megabytes of reads and writes per second from thousands of clients. Messages are persisted and replicated to prevent data loss. Data streams are partitioned and can be elastically scaled with no downtime.
+[Apache Kafka](http://kafka.apache.org/) is a message bus using
+publish-subscribe topics. Other components and products can consume these
+messages by subscribing to these topics. Kafka is extremely fast, handling
+megabytes of reads and writes per second from thousands of clients. Messages are
+persisted and replicated to prevent data loss. Data streams are partitioned and
+can be elastically scaled with no downtime.
 
 ## Requirements
 
@@ -23,8 +29,9 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 `$ ansible-galaxy install sleighzy.zookeeper`
 
 ## Role Variables
-    kafka_version: 2.0.0
-    kafka_scala_version: 2.11
+
+    kafka_version: 2.3.0
+    kafka_scala_version: 2.12
     kafka_root_dir: /opt
     kafka_dir: '{{ kafka_root_dir }}/kafka'
     kafka_broker_id: 0
@@ -44,41 +51,39 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
     kafka_consumer_group_id: kafka-consumer-group
 
 ## Starting and Stopping Kafka services using systemd
-* The Kafka service can be started via: `systemctl start kafka`
-* The Kafka service can be stopped via: `systemctl stop kafka`
+
+- The Kafka service can be started via: `systemctl start kafka`
+- The Kafka service can be stopped via: `systemctl stop kafka`
 
 ## Starting and Stopping Kafka services using initd
-* The Kafka service can be started via: `service kafka start`
-* The Kafka service can be stopped via: `service kafka stop`
+
+- The Kafka service can be started via: `service kafka start`
+- The Kafka service can be stopped via: `service kafka stop`
 
 ## Default Properties
 
-| Property | Value |
-|----------|-------|
-| ZooKeeper connection | localhost:2181 |
-| Kafka bootstrap servers | localhost:9092 |
-| Kafka consumer group Id | kafka-consumer-group |
-| Kafka broker id | 0 |
-| Number of partitions | 1 |
-| Data log file retention period | 168 hours |
-| Enable auto topic creation | false |
-| Enable topic deletion | true |
+| Property                       | Value                |
+| ------------------------------ | -------------------- |
+| ZooKeeper connection           | localhost:2181       |
+| Kafka bootstrap servers        | localhost:9092       |
+| Kafka consumer group Id        | kafka-consumer-group |
+| Kafka broker id                | 0                    |
+| Number of partitions           | 1                    |
+| Data log file retention period | 168 hours            |
+| Enable auto topic creation     | false                |
+| Enable topic deletion          | true                 |
 
 #### Ports
 
-| Port | Description |
-|------|-------------|
+| Port | Description         |
+| ---- | ------------------- |
 | 9092 | Kafka listener port |
-
 
 #### Directories and Files
 
-| Directory / File | |
-|-----|----|
-| Kafka installation directory (symlink to installed version) | `/opt/kafka` |
-| Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka` |
-| Directory to store data files | `/var/lib/kafka/logs` |
-| Kafka service | `/usr/lib/systemd/system/kafka.service` |
-
-
-[1]: http://kafka.apache.org/
+| Directory / File                                             |                                         |
+| ------------------------------------------------------------ | --------------------------------------- |
+| Kafka installation directory (symlink to installed version)  | `/opt/kafka`                            |
+| Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka`                            |
+| Directory to store data files                                | `/var/lib/kafka/logs`                   |
+| Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
