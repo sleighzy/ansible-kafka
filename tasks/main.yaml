@@ -179,8 +179,7 @@
     src: kafka.service.j2
     dest: /usr/lib/systemd/system/kafka.service
   notify:
-    - Reload systemd
-    - Restart kafka service
+    - Restart kafka systemd
   when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
   tags:
     - kafka_service
