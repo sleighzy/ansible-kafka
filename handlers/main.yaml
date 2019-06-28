@@ -1,12 +1,9 @@
 ---
-
 - name: Reload initd
   command: initctl reload-configuration
 
-- name: Reload systemd
-  command: systemctl daemon-reload
-
-- name: Restart kafka service
-  service:
+- name: Restart kafka service also daemon-reload to pick up config changes
+  systemd:
     name: kafka
     state: restarted
+    daemon_reload: yes

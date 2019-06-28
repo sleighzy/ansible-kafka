@@ -25,7 +25,7 @@
   get_url:
     url: http://www-eu.apache.org/dist/kafka/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz
     dest: /tmp
-  when: dir.stat.exists == False
+  when: not dir.stat.exists
   tags:
     - kafka_download
 
@@ -36,7 +36,7 @@
     copy: no
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
-  when: dir.stat.exists == False
+  when: not dir.stat.exists
   tags:
     - kafka_unpack
 
@@ -154,7 +154,7 @@
 
 - name: Create symlink to kafka consumer properties file
   file:
-    src: '{{ kafka_dir}}/config/consumer.properties'
+    src: '{{ kafka_dir }}/config/consumer.properties'
     dest: /etc/kafka/consumer.properties
     state: link
     group: '{{ kafka_group }}'
