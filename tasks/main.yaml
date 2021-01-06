@@ -18,7 +18,7 @@
 
 - name: Check if Kafka has already been downloaded and unpacked
   stat:
-    path: '{{ kafka_dir }}_{{ kafka_scala_version }}-{{ kafka_version }}'
+    path: '{{ kafka_root_dir }}/{{ kafka_scala_version }}-{{ kafka_version }}'
   register: dir
 
 - name: Download Apache Kafka
