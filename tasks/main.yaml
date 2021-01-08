@@ -170,7 +170,7 @@
   notify:
     - Reload initd
     - Restart kafka service
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == '6'
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == '6'
   tags:
     - kafka_service
 
@@ -180,7 +180,7 @@
     dest: /usr/lib/systemd/system/kafka.service
   notify:
     - Restart kafka systemd
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version > '6'
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version > '6'
   tags:
     - kafka_service
 
