@@ -14,17 +14,12 @@ can be elastically scaled with no downtime.
 
 ## Requirements
 
-Platform: RHEL / CentOS 6 and 7
+- Platform: RHEL / CentOS 6 and 7
+- Java: Java 8
+- Apache ZooKeeper
 
-Java: Java 8
-
-The Oracle Java 8 JDK role from Ansible Galaxy can be used if one is needed.
-
-`$ ansible-galaxy install sleighzy.java-8`
-
-Apache ZooKeeper
-
-The below zookeeper role from Ansible Galaxy can be used if one is needed.
+The below Apache ZooKeeper role from Ansible Galaxy can be used if one is
+needed.
 
 `$ ansible-galaxy install sleighzy.zookeeper`
 
@@ -73,13 +68,15 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 | Enable auto topic creation     | false                |
 | Enable topic deletion          | true                 |
 
-#### Ports
+### Ports
 
 | Port | Description         |
 | ---- | ------------------- |
 | 9092 | Kafka listener port |
 
-#### Directories and Files
+### Directories and Files
+
+<!-- markdownlint-disable MD013 -->
 
 | Directory / File                                             |                                         |
 | ------------------------------------------------------------ | --------------------------------------- |
@@ -87,3 +84,5 @@ The below zookeeper role from Ansible Galaxy can be used if one is needed.
 | Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka`                            |
 | Directory to store data files                                | `/var/lib/kafka/logs`                   |
 | Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
+
+<!-- markdownlint-enable MD013 -->
