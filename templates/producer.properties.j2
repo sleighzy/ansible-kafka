@@ -22,7 +22,7 @@
 # format: host1:port1,host2:port2 ...
 bootstrap.servers={{ kafka_producer_bootstrap_servers }}
 
-# specify the compression codec for all data generated: none, gzip, snappy, lz4
+# specify the compression codec for all data generated: none, gzip, snappy, lz4, zstd
 compression.type={{ kafka_producer_compression_type }}
 
 # name of the partitioner class for partitioning events; default partition spreads data randomly
