@@ -1,2 +1,7 @@
 # General file ignores
 .DS_Store
+
+.Python
+
+# Python virtual env for Molecule testing
+molecule-venv/
