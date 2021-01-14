@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: Install Java 8 (OpenJDK)
+      yum:
+        name: java-1.8.0-openjdk
+        state: installed
