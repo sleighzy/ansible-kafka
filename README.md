@@ -104,7 +104,7 @@ needed.
 | Kafka installation directory (symlink to installed version)  | `/opt/kafka`                            |
 | Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka`                            |
 | Directory to store data files                                | `/var/lib/kafka/logs`                   |
-| Directory to store logs files                                | `/var/log/kafkas`                       |
+| Directory to store logs files                                | `/var/log/kafka`                        |
 | Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
 
 <!-- markdownlint-enable MD013 -->
