@@ -2,8 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
 
-Ansible role to install and configure [Apache Kafka][1] 2.0.0 on RHEL / CentOS 6
-and 7.
+Ansible role to install and configure [Apache Kafka][1] 2.7.0 on RedHat 7 and 8.
 
 [Apache Kafka](http://kafka.apache.org/) is a message bus using
 publish-subscribe topics. Other components and products can consume these
@@ -14,7 +13,7 @@ can be elastically scaled with no downtime.
 
 ## Requirements
 
-- Platform: RHEL / CentOS 6 and 7
+- Platform: RedHat 7 and 8
 - Java: Java 8
 - Apache ZooKeeper
 
@@ -25,27 +24,47 @@ needed.
 
 ## Role Variables
 
-| Variable                           | Default                    |
-| ---------------------------------- | -------------------------- |
-| kafka_version                      | 2.7.0                      |
-| kafka_scala_version                | 2.13                       |
-| kafka_root_dir                     | /opt                       |
-| kafka_dir                          | {{ kafka_root_dir }}/kafka |
-| kafka_broker_id                    | 0                          |
-| kafka_listener_protocol            | PLAINTEXT                  |
-| kafka_listener_hostname            | localhost                  |
-| kafka_listener_port                | 9092                       |
-| kafka_num_network_threads          | 3                          |
-| kafka_log_dirs                     | /var/lib/kafka-logs        |
-| kafka_num_partitions               | 1                          |
-| kafka_log_retention_hours          | 168                        |
-| kafka_auto_create_topics_enable    | true                       |
-| kafka_delete_topic_enable          | true                       |
-| kafka_default_replication_factor   | 1                          |
-| kafka_zookeeper_connect            | localhost:2181             |
-| kafka_zookeeper_connection_timeout | 6000                       |
-| kafka_bootstrap_servers            | localhost:9092             |
-| kafka_consumer_group_id            | kafka-consumer-group       |
+| Variable                                        | Default                    |
+| ----------------------------------------------- | -------------------------- |
+| kafka_version                                   | 2.7.0                      |
+| kafka_scala_version                             | 2.13                       |
+| kafka_create_user_group                         | true                       |
+| kafka_user                                      | kafka                      |
+| kafka_group                                     | kafka                      |
+| kafka_root_dir                                  | /opt                       |
+| kafka_dir                                       | {{ kafka_root_dir }}/kafka |
+| kafka_log_dir                                   | /var/log/kafka             |
+| kafka_broker_id                                 | 0                          |
+| kafka_java_heap                                 | -Xms1G -Xmx1G              |
+| kafka_background_threads                        | 10                         |
+| kafka_listener_protocol                         | PLAINTEXT                  |
+| kafka_listener_hostname                         | localhost                  |
+| kafka_listener_port                             | 9092                       |
+| kafka_num_network_threads                       | 3                          |
+| kafka_num_io_threads                            | 8                          |
+| kafka_num_replica_fetchers                      | 1                          |
+| kafka_socket_send_buffer_bytes                  | 102400                     |
+| kafka_socket_receive_buffer_bytes               | 102400                     |
+| kafka_socket_request_max_bytes                  | 104857600                  |
+| kafka_replica_socket_receive_buffer_bytes       | 65536                      |
+| kafka_data_log_dirs                             | /var/lib/kafka-logs        |
+| kafka_num_partitions                            | 1                          |
+| kafka_num_recovery_threads_per_data_dir         | 1                          |
+| kafka_log_cleaner_threads                       | 1                          |
+| kafka_offsets_topic_replication_factor          | 1                          |
+| kafka_transaction_state_log_replication_factor  | 1                          |
+| kafka_transaction_state_log_min_isr             | 1                          |
+| kafka_log_retention_hours                       | 168                        |
+| kafka_log_segment_bytes                         | 1073741824                 |
+| kafka_log_retention_check_interval_ms           | 300000                     |
+| kafka_auto_create_topics_enable 		  | false                      |
+| kafka_delete_topic_enable          		  | true                       |
+| kafka_default_replication_factor   		  | 1                          |
+| kafka_group_initial_rebalance_delay_ms	  | 0                          |
+| kafka_zookeeper_connect            		  | localhost:2181             |
+| kafka_zookeeper_connection_timeout		  | 6000                       |
+| kafka_bootstrap_servers            		  | localhost:9092             |
+| kafka_consumer_group_id            		  | kafka-consumer-group       |
 
 ## Starting and Stopping Kafka services using systemd
 
@@ -85,6 +104,7 @@ needed.
 | Kafka installation directory (symlink to installed version)  | `/opt/kafka`                            |
 | Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka`                            |
 | Directory to store data files                                | `/var/lib/kafka/logs`                   |
+| Directory to store logs files                                | `/var/log/kafkas`                       |
 | Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
 
 <!-- markdownlint-enable MD013 -->
