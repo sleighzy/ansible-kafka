@@ -47,7 +47,7 @@ needed.
 | kafka_socket_receive_buffer_bytes               | 102400                     |
 | kafka_socket_request_max_bytes                  | 104857600                  |
 | kafka_replica_socket_receive_buffer_bytes       | 65536                      |
-| kafka_data_log_dirs                             | /var/lib/kafka-logs        |
+| kafka_data_log_dirs                             | /var/lib/kafka/logs        |
 | kafka_num_partitions                            | 1                          |
 | kafka_num_recovery_threads_per_data_dir         | 1                          |
 | kafka_log_cleaner_threads                       | 1                          |
@@ -104,7 +104,7 @@ needed.
 | Kafka installation directory (symlink to installed version)  | `/opt/kafka`                            |
 | Kafka configuration directory (symlink to /opt/kafka/config) | `/etc/kafka`                            |
 | Directory to store data files                                | `/var/lib/kafka/logs`                   |
-| Directory to store logs files                                | `/var/log/kafkas`                       |
+| Directory to store logs files                                | `/var/log/kafka`                        |
 | Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
 
 <!-- markdownlint-enable MD013 -->
