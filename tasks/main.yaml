@@ -196,7 +196,6 @@
   service:
     name: kafka
     state: started
-    enabled: yes
   tags:
     - kafka_service
 
