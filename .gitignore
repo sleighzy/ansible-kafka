@@ -5,3 +5,4 @@
 
 # Python virtual env for Molecule testing
 molecule-venv/
+.vscode
