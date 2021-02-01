@@ -1,0 +1,2 @@
+---
+kafka_unit_path: /etc/systemd/system/kafka.service
