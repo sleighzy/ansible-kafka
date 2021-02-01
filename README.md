@@ -14,8 +14,8 @@ can be elastically scaled with no downtime.
 
 ## Requirements
 
-- Platform: RHEL / CentOS 6 and 7
-- Java: Java 8
+- Platform: RHEL / CentOS 6 and 7 / Debian or Ubuntu
+- Java: Java 8 / 11
 - Apache ZooKeeper
 
 The below Apache ZooKeeper role from Ansible Galaxy can be used if one is
