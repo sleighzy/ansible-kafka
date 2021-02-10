@@ -170,6 +170,18 @@
   tags:
     - kafka_config
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+  tags:
+    - kafka_service
+
+- name: Debug service state
+  debug:
+    msg:
+      "kafka service state": "{{ ansible_facts.services['kafka.service'].state }}"
+  tags:
+    - kafka_service
+
 - name: Template Kafka init.d service file
   template:
     src: kafka.initd.j2
@@ -196,6 +208,7 @@
   service:
     name: kafka
     state: started
+  when: kafka_start and ansible_facts.services['kafka.service'].state in ['stopped', 'inactive']  
   tags:
     - kafka_service
 

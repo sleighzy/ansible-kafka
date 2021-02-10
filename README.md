@@ -32,6 +32,8 @@ needed.
 | kafka_scala_version                | 2.13                                 |
 | kafka_root_dir                     | /opt                                 |
 | kafka_dir                          | {{ kafka_root_dir }}/kafka           |
+| kafka_start                        | yes                                  |
+| kafka_restart                      | yes                                  |
 | kafka_broker_id                    | 0                                    |
 | kafka_listener_protocol            | PLAINTEXT                            |
 | kafka_listener_hostname            | localhost                            |
