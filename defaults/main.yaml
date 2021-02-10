@@ -12,6 +12,11 @@ kafka_group: kafka
 kafka_root_dir: /opt
 kafka_dir: "{{ kafka_root_dir }}/kafka"
 
+# Start kafka after installation
+kafka_start: yes
+# Restart kafka on configuration change
+kafka_restart: yes
+
 ############################# Server #############################
 
 # The id of the broker. This must be set to a unique integer for each broker.
