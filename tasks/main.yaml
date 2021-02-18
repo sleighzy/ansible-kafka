@@ -4,7 +4,7 @@
   group:
     name: '{{ kafka_group }}'
     state: present
-  when: kafka_create_user_group|bool == true
+  when: kafka_create_user_group | bool
   tags:
     - kafka_group
 
@@ -14,7 +14,7 @@
     group: '{{ kafka_group }}'
     state: present
     createhome: no
-  when: kafka_create_user_group|bool == true
+  when: kafka_create_user_group | bool
   tags:
     - kafka_user
 
