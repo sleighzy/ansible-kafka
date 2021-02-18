@@ -170,18 +170,6 @@
   tags:
     - kafka_config
 
-- name: Populate service facts
-  ansible.builtin.service_facts:
-  tags:
-    - kafka_service
-
-- name: Debug service state
-  debug:
-    msg:
-      "kafka service state": "{{ ansible_facts.services['kafka.service'].state }}"
-  tags:
-    - kafka_service
-
 - name: Template Kafka init.d service file
   template:
     src: kafka.initd.j2
@@ -201,6 +189,18 @@
   notify:
     - Restart kafka systemd
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version > '6' or ansible_os_family == "Debian"
+  tags:
+    - kafka_service
+
+- name: Populate service facts
+  ansible.builtin.service_facts:
+  tags:
+    - kafka_service
+
+- name: Debug service state
+  debug:
+    msg:
+      "kafka service state": "{{ ansible_facts.services['kafka.service'].state }}"
   tags:
     - kafka_service
 
