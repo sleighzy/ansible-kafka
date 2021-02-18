@@ -208,6 +208,7 @@
   service:
     name: kafka
     state: started
+    enabled: yes
   when: kafka_start and ansible_facts.services['kafka.service'].state in ['stopped', 'inactive']  
   tags:
     - kafka_service
