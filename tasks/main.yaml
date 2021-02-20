@@ -192,24 +192,12 @@
   tags:
     - kafka_service
 
-- name: Populate service facts
-  ansible.builtin.service_facts:
-  tags:
-    - kafka_service
-
-- name: Debug service state
-  debug:
-    msg:
-      "kafka service state": "{{ ansible_facts.services['kafka.service'].state }}"
-  tags:
-    - kafka_service
-
 - name: Install and start the kafka service
   service:
     name: kafka
     state: started
     enabled: yes
-  when: kafka_start and ansible_facts.services['kafka.service'].state in ['stopped', 'inactive']  
+  when: kafka_start
   tags:
     - kafka_service
 
