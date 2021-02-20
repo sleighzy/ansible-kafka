@@ -10,13 +10,13 @@
   - name: Create Docker network
     docker_network:
       name: kafka
-      ipam_options:
-        subnet: '172.25.0.0/16'
+      ipam_config:
+          - subnet: '172.25.0.0/16'
 
   # The centos/systemd image used to create these containers is required so
   # that systemd is available. This is used for the systemctl commands to
   # install and run the zookeeper services for this role. The privileged container
-  # and "/sys/fs/cgroup" volume mount is also requird for systemd support.
+  # and "/sys/fs/cgroup" volume mount is also required for systemd support.
   # The container needs to be started with the "/usr/lib/systemd/systemd" so that
   # this service is initialized.
   - name: Create ZooKeeper Docker containers
