@@ -1,5 +1,7 @@
 ---
 # The Apache Kafka version to be downloaded and installed
+# kafka_download_base_url should be set to https://archive.apache.org/dist/kafka/ for older versions than the current
+kafka_download_base_url: http://www-eu.apache.org/dist/kafka
 kafka_version: 2.7.0
 kafka_scala_version: 2.13
 
@@ -9,6 +11,11 @@ kafka_group: kafka
 
 kafka_root_dir: /opt
 kafka_dir: "{{ kafka_root_dir }}/kafka"
+
+# Start kafka after installation
+kafka_start: yes
+# Restart kafka on configuration change
+kafka_restart: yes
 
 ############################# Server #############################
 

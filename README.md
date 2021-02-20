@@ -14,8 +14,8 @@ can be elastically scaled with no downtime.
 
 ## Requirements
 
-- Platform: RHEL / CentOS 6 and 7
-- Java: Java 8
+- Platform: RHEL / CentOS 6 and 7 / Debian or Ubuntu
+- Java: Java 8 / 11
 - Apache ZooKeeper
 
 The below Apache ZooKeeper role from Ansible Galaxy can be used if one is
@@ -25,27 +25,30 @@ needed.
 
 ## Role Variables
 
-| Variable                           | Default                    |
-| ---------------------------------- | -------------------------- |
-| kafka_version                      | 2.7.0                      |
-| kafka_scala_version                | 2.13                       |
-| kafka_root_dir                     | /opt                       |
-| kafka_dir                          | {{ kafka_root_dir }}/kafka |
-| kafka_broker_id                    | 0                          |
-| kafka_listener_protocol            | PLAINTEXT                  |
-| kafka_listener_hostname            | localhost                  |
-| kafka_listener_port                | 9092                       |
-| kafka_num_network_threads          | 3                          |
-| kafka_log_dirs                     | /var/lib/kafka-logs        |
-| kafka_num_partitions               | 1                          |
-| kafka_log_retention_hours          | 168                        |
-| kafka_auto_create_topics_enable    | true                       |
-| kafka_delete_topic_enable          | true                       |
-| kafka_default_replication_factor   | 1                          |
-| kafka_zookeeper_connect            | localhost:2181             |
-| kafka_zookeeper_connection_timeout | 6000                       |
-| kafka_bootstrap_servers            | localhost:9092             |
-| kafka_consumer_group_id            | kafka-consumer-group       |
+| Variable                           | Default                              |
+| ---------------------------------- | ------------------------------------ |
+| kafka_download_base_url            | http://www-eu.apache.org/dist/kafka  |
+| kafka_version                      | 2.7.0                                |
+| kafka_scala_version                | 2.13                                 |
+| kafka_root_dir                     | /opt                                 |
+| kafka_dir                          | {{ kafka_root_dir }}/kafka           |
+| kafka_start                        | yes                                  |
+| kafka_restart                      | yes                                  |
+| kafka_broker_id                    | 0                                    |
+| kafka_listener_protocol            | PLAINTEXT                            |
+| kafka_listener_hostname            | localhost                            |
+| kafka_listener_port                | 9092                                 |
+| kafka_num_network_threads          | 3                                    |
+| kafka_log_dirs                     | /var/lib/kafka-logs                  |
+| kafka_num_partitions               | 1                                    |
+| kafka_log_retention_hours          | 168                                  |
+| kafka_auto_create_topics_enable    | true                                 |
+| kafka_delete_topic_enable          | true                                 |
+| kafka_default_replication_factor   | 1                                    |
+| kafka_zookeeper_connect            | localhost:2181                       |
+| kafka_zookeeper_connection_timeout | 6000                                 |
+| kafka_bootstrap_servers            | localhost:9092                       |
+| kafka_consumer_group_id            | kafka-consumer-group                 |
 
 ## Starting and Stopping Kafka services using systemd
 
