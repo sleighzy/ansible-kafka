@@ -1,2 +1,7 @@
 exclude_paths:
   - ./molecule-venv/
+  - ./tests/roles/
+
+skip_list:
+  - '106'  # Role name does not match ``^[a-z][a-z0-9_]+$`` pattern
+  
