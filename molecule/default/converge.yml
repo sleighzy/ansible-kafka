@@ -3,4 +3,8 @@
   hosts: all
   roles:
     - sleighzy.zookeeper
-    - ansible-kafka
+
+  tasks:
+    - name: 'Test Kafka role'
+      include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
