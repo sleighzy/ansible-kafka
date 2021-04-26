@@ -32,6 +32,13 @@ needed.
 ansible-galaxy install sleighzy.zookeeper
 ```
 
+Ansible 2.9.16 or 2.10.4 are the minimum required versions to workaround an
+issue with certain kernels that have broken the `systemd` status check. The
+error message "`Service is in unknown state`" will be output when attempting to
+start the service via the Ansible role and the task will fail. The service will
+start as expected if the `systemctl start` command is run on the physical host.
+See <https://github.com/ansible/ansible/issues/71528> for more information.
+
 ## Role Variables
 
 | Variable                           | Default                               |

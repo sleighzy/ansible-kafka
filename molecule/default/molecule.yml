@@ -60,7 +60,7 @@ platforms:
       - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: '/usr/sbin/init'
+    command: '/usr/lib/systemd/systemd'
     pre_build_image: true
     capabilities:
       - SYS_ADMIN
