@@ -19,6 +19,7 @@ elastically scaled with no downtime.
 - RedHat 8
 - Debian 10.x
 - Ubuntu 18.04.x
+- Ubuntu 20.04.x
 
 ## Requirements
 
