@@ -3,7 +3,7 @@ galaxy_info:
   author: Simon Leigh
   description: Apache Kafka installation for RHEL/CentOS and Debian/Ubuntu
   license: MIT
-  min_ansible_version: 2.x
+  min_ansible_version: 2.10.4
   platforms:
     - name: EL
       versions:
@@ -16,6 +16,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - bionic
+        - focal
   galaxy_tags:
     - clustering
     - kafka

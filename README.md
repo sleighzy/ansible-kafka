@@ -3,7 +3,7 @@
 [![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
 ![Lint Code Base] ![Ansible Lint] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 2.7.0
+Ansible role to install and configure [Apache Kafka] 2.8.0
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -19,6 +19,7 @@ elastically scaled with no downtime.
 - RedHat 8
 - Debian 10.x
 - Ubuntu 18.04.x
+- Ubuntu 20.04.x
 
 ## Requirements
 
@@ -32,12 +33,19 @@ needed.
 ansible-galaxy install sleighzy.zookeeper
 ```
 
+Ansible 2.9.16 or 2.10.4 are the minimum required versions to workaround an
+issue with certain kernels that have broken the `systemd` status check. The
+error message "`Service is in unknown state`" will be output when attempting to
+start the service via the Ansible role and the task will fail. The service will
+start as expected if the `systemctl start` command is run on the physical host.
+See <https://github.com/ansible/ansible/issues/71528> for more information.
+
 ## Role Variables
 
 | Variable                           | Default                               |
 | ---------------------------------- | ------------------------------------- |
 | kafka_download_base_url            | <http://www-eu.apache.org/dist/kafka> |
-| kafka_version                      | 2.7.0                                 |
+| kafka_version                      | 2.8.0                                 |
 | kafka_scala_version                | 2.13                                  |
 | kafka_root_dir                     | /opt                                  |
 | kafka_dir                          | {{ kafka_root_dir }}/kafka            |
@@ -130,7 +138,7 @@ install Molecule including the Docker driver.
 ```sh
 $ python3 -m venv molecule-venv
 $ source molecule-venv/bin/activate
-(molecule-venv) $ python3 -m pip install --user "molecule[docker,lint]"
+(molecule-venv) $ python3 -m pip install molecule-docker "molecule[docker,lint]"
 ```
 
 Run playbook and tests. Linting errors need to be corrected before Molecule will
