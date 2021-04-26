@@ -3,7 +3,7 @@
 [![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
 ![Lint Code Base] ![Ansible Lint] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 2.7.0
+Ansible role to install and configure [Apache Kafka] 2.8.0
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -37,7 +37,7 @@ ansible-galaxy install sleighzy.zookeeper
 | Variable                           | Default                               |
 | ---------------------------------- | ------------------------------------- |
 | kafka_download_base_url            | <http://www-eu.apache.org/dist/kafka> |
-| kafka_version                      | 2.7.0                                 |
+| kafka_version                      | 2.8.0                                 |
 | kafka_scala_version                | 2.13                                  |
 | kafka_root_dir                     | /opt                                  |
 | kafka_dir                          | {{ kafka_root_dir }}/kafka            |

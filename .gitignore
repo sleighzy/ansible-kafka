@@ -1,8 +1,11 @@
 # General file ignores
 .DS_Store
+.vscode
+super-linter.log
 
-.Python
+# Symlink to current repository to enable Ansible to find the role
+# using its expected full name for Molecule tests
+.cache/
 
 # Python virtual env for Molecule testing
 molecule-venv/
-.vscode
