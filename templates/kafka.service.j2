@@ -8,6 +8,7 @@ After=network.target
 Type=simple
 StandardOutput=null
 Environment="KAFKA_HEAP_OPTS={{ kafka_java_heap }}"
+Environment="LOG_DIR={{ kafka_log_dir }}"
 ExecStart={{ kafka_dir }}/bin/kafka-server-start.sh /etc/kafka/server.properties
 ExecStop={{ kafka_dir }}/bin/kafka-server-stop.sh
 User={{ kafka_user }}
