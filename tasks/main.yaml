@@ -12,6 +12,7 @@
   group:
     name: '{{ kafka_group }}'
     state: present
+  when: kafka_create_user_group | bool
   tags:
     - kafka_group
 
@@ -21,6 +22,7 @@
     group: '{{ kafka_group }}'
     state: present
     createhome: no
+  when: kafka_create_user_group | bool
   tags:
     - kafka_user
 
@@ -58,13 +60,32 @@
   tags:
     - kafka_dirs
 
-- name: Create directory for kafka log files
+- name: Create directory for kafka data log files
   file:
-    path: '{{ kafka_log_dirs }}'
+    path: '{{ kafka_data_log_dirs }}'
     state: directory
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
     mode: 0755
+  tags:
+    - kafka_dirs
+
+- name: Create directory for kafka application logs
+  file:
+    path: '{{ kafka_log_dir }}'
+    state: directory
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+  tags:
+    - kafka_dirs
+
+- name: Create symlink to kafka application logs
+  file:
+    src: '{{ kafka_log_dir }}'
+    dest: '{{ kafka_dir }}/logs'
+    state: link
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
   tags:
     - kafka_dirs
 

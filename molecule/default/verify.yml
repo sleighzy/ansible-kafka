@@ -41,6 +41,19 @@
           - kafka_dir.stat.islnk
           - kafka_dir.stat.lnk_target == '/opt/kafka_2.13-2.8.0'
 
+    - name: Register '/var/log/kafka' directory status
+      stat:
+        path: '/var/log/kafka'
+      register: kafka_log_dir
+
+    - name: Assert that '/var/log/kafka' directory is created
+      assert:
+        that:
+          - kafka_log_dir.stat.exists
+          - kafka_log_dir.stat.isdir
+          - kafka_log_dir.stat.pw_name == 'kafka'
+          - kafka_log_dir.stat.gr_name == 'kafka'
+
     - name: Register '/etc/kafka' directory status
       stat:
         path: '/etc/kafka'
