@@ -54,6 +54,20 @@
           - kafka_log_dir.stat.pw_name == 'kafka'
           - kafka_log_dir.stat.gr_name == 'kafka'
 
+    - name: Register '/opt/kafka/logs' symlink directory status
+      stat:
+        path: '/opt/kafka/logs'
+      register: application_logs_symlink
+
+    - name: Assert that '/opt/kafka/logs' symlink is created
+      assert:
+        that:
+          - application_logs_symlink.stat.exists
+          - application_logs_symlink.stat.islnk
+          - application_logs_symlink.stat.lnk_target == '/var/log/kafka'
+          - application_logs_symlink.stat.pw_name == 'kafka'
+          - application_logs_symlink.stat.gr_name == 'kafka'
+
     - name: Register '/etc/kafka' directory status
       stat:
         path: '/etc/kafka'

@@ -52,6 +52,8 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_group                                    | kafka                                 |
 | kafka_root_dir                                 | /opt                                  |
 | kafka_dir                                      | {{ kafka_root_dir }}/kafka            |
+| kafka_start                                    | yes                                   |
+| kafka_restart                                  | yes                                   |
 | kafka_log_dir                                  | /var/log/kafka                        |
 | kafka_broker_id                                | 0                                     |
 | kafka_java_heap                                | -Xms1G -Xmx1G                         |

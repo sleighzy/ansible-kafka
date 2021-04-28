@@ -76,16 +76,27 @@
     state: directory
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
+    mode: 0755
   tags:
     - kafka_dirs
 
-- name: Create symlink to kafka application logs
+- name: Register '{{ kafka_dir }}/logs' directory status
+  stat:
+    path: '{{ kafka_dir }}/logs'
+  register: application_logs_dir
+  tags:
+    - kafka_dirs
+
+- name: Create symlink to application log directory
   file:
     src: '{{ kafka_log_dir }}'
     dest: '{{ kafka_dir }}/logs'
     state: link
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
+    mode: 0755
+    follow: no
+  when: not application_logs_dir.stat.exists
   tags:
     - kafka_dirs
 

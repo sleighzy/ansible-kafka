@@ -13,7 +13,7 @@ kafka_group: kafka
 kafka_root_dir: /opt
 kafka_dir: "{{ kafka_root_dir }}/kafka"
 
-# The application log folder (e.g: server.log) 
+# The application log folder (e.g: server.log)
 kafka_log_dir: /var/log/kafka
 
 # Start kafka after installation
@@ -67,7 +67,7 @@ kafka_socket_request_max_bytes: 104857600
 # The socket receive buffer for network requests
 kafka_replica_socket_receive_buffer_bytes: 65536
 
-# A comma seperated list of directories under which to store log files
+# A comma separated list of directories under which to store data log files
 kafka_data_log_dirs: /var/lib/kafka/logs
 
 # The default number of log partitions per topic. More partitions allow greater
