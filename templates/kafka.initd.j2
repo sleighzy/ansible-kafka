@@ -7,6 +7,7 @@
 # processname: kafka
 
 # Source function library.
+# shellcheck disable=SC1091
 . /etc/init.d/functions
 
 RETVAL=0
@@ -14,11 +15,12 @@ prog="kafka"
 LOCKFILE=/var/lock/subsys/$prog
 
 # Declare variables for Kafka
+# shellcheck disable=SC1083
 KAFKA_HOME_DIR={{ kafka_dir }}
 
 start() {
         echo -n "Starting $prog: "
-        $KAFKA_HOME_DIR/bin/kafka-start-server.sh $KAFKA_HOME_DIR/config/server.properties
+        "$KAFKA_HOME_DIR/bin/kafka-start-server.sh" "$KAFKA_HOME_DIR/config/server.properties"
         RETVAL=$?
         [ $RETVAL -eq 0 ] && touch $LOCKFILE
         echo
@@ -27,7 +29,8 @@ start() {
 
 stop() {
         echo -n "Shutting down $prog: "
-        $KAFKA_HOME_DIR/bin/kafka-stop-server.sh && success || failure
+        # shellcheck disable=SC2015
+        "$KAFKA_HOME_DIR/bin/kafka-stop-server.sh" && success || failure
         RETVAL=$?
         [ $RETVAL -eq 0 ] && rm -f $LOCKFILE
         echo

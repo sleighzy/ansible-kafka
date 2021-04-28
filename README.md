@@ -1,70 +1,89 @@
 # Apache Kafka
 
-[![Build Status](https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master)](https://travis-ci.org/sleighzy/ansible-kafka)
+[![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
+![Lint Code Base] ![Ansible Lint] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka][1] 2.7.0 on RedHat 7 and 8.
+Ansible role to install and configure [Apache Kafka] 2.8.0
 
-[Apache Kafka](http://kafka.apache.org/) is a message bus using
-publish-subscribe topics. Other components and products can consume these
-messages by subscribing to these topics. Kafka is extremely fast, handling
-megabytes of reads and writes per second from thousands of clients. Messages are
-persisted and replicated to prevent data loss. Data streams are partitioned and
-can be elastically scaled with no downtime.
+[Apache Kafka] is a distributed event streaming platform using publish-subscribe
+topics. Applications and streaming components can produce and consume messages
+by subscribing to these topics. Kafka is extremely fast, handling megabytes of
+reads and writes per second from thousands of clients. Messages are persisted
+and replicated to prevent data loss. Data streams are partitioned and can be
+elastically scaled with no downtime.
+
+## Supported Platforms
+
+- RedHat 6
+- RedHat 7
+- RedHat 8
+- Debian 10.x
+- Ubuntu 18.04.x
+- Ubuntu 20.04.x
 
 ## Requirements
 
-- Platform: RedHat 7 and 8
-- Java: Java 8
-- Apache ZooKeeper
+- [Apache ZooKeeper]
+- Java 8 / 11
 
 The below Apache ZooKeeper role from Ansible Galaxy can be used if one is
 needed.
 
-`$ ansible-galaxy install sleighzy.zookeeper`
+```sh
+ansible-galaxy install sleighzy.zookeeper
+```
+
+Ansible 2.9.16 or 2.10.4 are the minimum required versions to workaround an
+issue with certain kernels that have broken the `systemd` status check. The
+error message "`Service is in unknown state`" will be output when attempting to
+start the service via the Ansible role and the task will fail. The service will
+start as expected if the `systemctl start` command is run on the physical host.
+See <https://github.com/ansible/ansible/issues/71528> for more information.
 
 ## Role Variables
 
-| Variable                                        | Default                    |
-| ----------------------------------------------- | -------------------------- |
-| kafka_version                                   | 2.7.0                      |
-| kafka_scala_version                             | 2.13                       |
-| kafka_create_user_group                         | true                       |
-| kafka_user                                      | kafka                      |
-| kafka_group                                     | kafka                      |
-| kafka_root_dir                                  | /opt                       |
-| kafka_dir                                       | {{ kafka_root_dir }}/kafka |
-| kafka_log_dir                                   | /var/log/kafka             |
-| kafka_broker_id                                 | 0                          |
-| kafka_java_heap                                 | -Xms1G -Xmx1G              |
-| kafka_background_threads                        | 10                         |
-| kafka_listener_protocol                         | PLAINTEXT                  |
-| kafka_listener_hostname                         | localhost                  |
-| kafka_listener_port                             | 9092                       |
-| kafka_num_network_threads                       | 3                          |
-| kafka_num_io_threads                            | 8                          |
-| kafka_num_replica_fetchers                      | 1                          |
-| kafka_socket_send_buffer_bytes                  | 102400                     |
-| kafka_socket_receive_buffer_bytes               | 102400                     |
-| kafka_socket_request_max_bytes                  | 104857600                  |
-| kafka_replica_socket_receive_buffer_bytes       | 65536                      |
-| kafka_data_log_dirs                             | /var/lib/kafka/logs        |
-| kafka_num_partitions                            | 1                          |
-| kafka_num_recovery_threads_per_data_dir         | 1                          |
-| kafka_log_cleaner_threads                       | 1                          |
-| kafka_offsets_topic_replication_factor          | 1                          |
-| kafka_transaction_state_log_replication_factor  | 1                          |
-| kafka_transaction_state_log_min_isr             | 1                          |
-| kafka_log_retention_hours                       | 168                        |
-| kafka_log_segment_bytes                         | 1073741824                 |
-| kafka_log_retention_check_interval_ms           | 300000                     |
-| kafka_auto_create_topics_enable 		  | false                      |
-| kafka_delete_topic_enable          		  | true                       |
-| kafka_default_replication_factor   		  | 1                          |
-| kafka_group_initial_rebalance_delay_ms	  | 0                          |
-| kafka_zookeeper_connect            		  | localhost:2181             |
-| kafka_zookeeper_connection_timeout		  | 6000                       |
-| kafka_bootstrap_servers            		  | localhost:9092             |
-| kafka_consumer_group_id            		  | kafka-consumer-group       |
+| Variable                                       | Default                               |
+| ---------------------------------------------- | ------------------------------------- |
+| kafka_download_base_url                        | <http://www-eu.apache.org/dist/kafka> |
+| kafka_version                                  | 2.8.0                                 |
+| kafka_scala_version                            | 2.13                                  |
+| kafka_create_user_group                        | true                                  |
+| kafka_user                                     | kafka                                 |
+| kafka_group                                    | kafka                                 |
+| kafka_root_dir                                 | /opt                                  |
+| kafka_dir                                      | {{ kafka_root_dir }}/kafka            |
+| kafka_log_dir                                  | /var/log/kafka                        |
+| kafka_broker_id                                | 0                                     |
+| kafka_java_heap                                | -Xms1G -Xmx1G                         |
+| kafka_background_threads                       | 10                                    |
+| kafka_listener_protocol                        | PLAINTEXT                             |
+| kafka_listener_hostname                        | localhost                             |
+| kafka_listener_port                            | 9092                                  |
+| kafka_num_network_threads                      | 3                                     |
+| kafka_num_io_threads                           | 8                                     |
+| kafka_num_replica_fetchers                     | 1                                     |
+| kafka_socket_send_buffer_bytes                 | 102400                                |
+| kafka_socket_receive_buffer_bytes              | 102400                                |
+| kafka_socket_request_max_bytes                 | 104857600                             |
+| kafka_replica_socket_receive_buffer_bytes      | 65536                                 |
+| kafka_data_log_dirs                            | /var/lib/kafka/logs                   |
+| kafka_num_partitions                           | 1                                     |
+| kafka_num_recovery_threads_per_data_dir        | 1                                     |
+| kafka_log_cleaner_threads                      | 1                                     |
+| kafka_offsets_topic_replication_factor         | 1                                     |
+| kafka_transaction_state_log_replication_factor | 1                                     |
+| kafka_transaction_state_log_min_isr            | 1                                     |
+| kafka_log_retention_hours                      | 168                                   |
+| kafka_log_segment_bytes                        | 1073741824                            |
+| kafka_log_retention_check_interval_ms          | 300000                                |
+| kafka_auto_create_topics_enable                | false                                 |
+| kafka_delete_topic_enable                      | true                                  |
+| kafka_default_replication_factor               | 1                                     |
+| kafka_group_initial_rebalance_delay_ms         | 0                                     |
+| kafka_zookeeper_connect                        | localhost:2181                        |
+| kafka_zookeeper_connection_timeout             | 6000                                  |
+| kafka_bootstrap_servers                        | localhost:9092                        |
+| kafka_consumer_group_id                        | kafka-consumer-group                  |
 
 ## Starting and Stopping Kafka services using systemd
 
@@ -97,8 +116,6 @@ needed.
 
 ### Directories and Files
 
-<!-- markdownlint-disable MD013 -->
-
 | Directory / File                                             |                                         |
 | ------------------------------------------------------------ | --------------------------------------- |
 | Kafka installation directory (symlink to installed version)  | `/opt/kafka`                            |
@@ -106,8 +123,6 @@ needed.
 | Directory to store data files                                | `/var/lib/kafka/logs`                   |
 | Directory to store logs files                                | `/var/log/kafka`                        |
 | Kafka service                                                | `/usr/lib/systemd/system/kafka.service` |
-
-<!-- markdownlint-enable MD013 -->
 
 ## Example Playbook
 
@@ -122,8 +137,7 @@ Add the below to a playbook to run those role against hosts belonging to the
 
 ## Linting
 
-Linting should be done using
-[ansible-lint](https://docs.ansible.com/ansible-lint/)
+Linting should be done using [ansible-lint].
 
 ```sh
 pip3 install ansible-lint --user
@@ -131,18 +145,19 @@ pip3 install ansible-lint --user
 
 ## Testing
 
-This module uses [Molecule](https://molecule.readthedocs.io/en/stable/) as a
-testing framework.
+This module uses the [Ansible Molecule] testing framework. This test suite
+creates a Kafka and ZooKeeper cluster consisting of three nodes running within
+Docker containers. Each container runs a different OS to test the supported
+platforms for this Ansible role.
 
-As per the
-[Molecule Installation guide](https://molecule.readthedocs.io/en/stable/installation.html)
-this should be done using a virtual environment. The commands below will create
-a Python virtual environment and install Molecule including the Docker driver.
+As per the [Molecule Installation guide] this should be done using a virtual
+environment. The commands below will create a Python virtual environment and
+install Molecule including the Docker driver.
 
 ```sh
 $ python3 -m venv molecule-venv
 $ source molecule-venv/bin/activate
-(molecule-venv) $ python3 -m pip install --user "molecule[docker,lint]"
+(molecule-venv) $ python3 -m pip install molecule-docker "molecule[docker,lint]"
 ```
 
 Run playbook and tests. Linting errors need to be corrected before Molecule will
@@ -170,7 +185,7 @@ molecule converge
 molecule verify
 ```
 
-Tear down Molecule tests and Docker container.
+Tear down Molecule tests and Docker containers.
 
 ```sh
 molecule destroy
@@ -178,4 +193,18 @@ molecule destroy
 
 ## License
 
-MIT
+[![MIT license]](https://lbesson.mit-license.org/)
+
+[ansible lint]:
+  https://github.com/sleighzy/ansible-kafka/workflows/Ansible%20Lint/badge.svg
+[ansible-lint]: https://docs.ansible.com/ansible-lint/
+[apache kafka]: http://kafka.apache.org/
+[apache zookeeper]: https://zookeeper.apache.org/
+[build status]: https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master
+[lint code base]:
+  https://github.com/sleighzy/ansible-kafka/workflows/Lint%20Code%20Base/badge.svg
+[molecule]:
+  https://github.com/sleighzy/ansible-kafka/workflows/Molecule/badge.svg
+[molecule installation guide]:
+  https://molecule.readthedocs.io/en/stable/installation.html
+[mit license]: https://img.shields.io/badge/License-MIT-blue.svg

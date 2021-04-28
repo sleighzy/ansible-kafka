@@ -4,12 +4,22 @@ dependency:
   options:
     ignore-certs: True
     ignore-errors: True
-    role-file: requirements.yml
+    role-file: molecule/default/requirements.yml
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: centos:7
+  - name: server-1
+    image: geerlingguy/docker-debian10-ansible:latest
+    docker_networks:
+      - name: kafka
+        ipam_config:
+          - subnet: '172.40.0.0/16'
+    networks:
+      - name: kafka
+        ipv4_address: '172.40.10.1'
+    etc_hosts: "{'server-2': '172.40.10.2', 'server-3': '172.40.10.3'}"
+    pre_build_image: true
+    privileged: True
     tmpfs:
       - /run
       - /tmp
@@ -17,22 +27,71 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     capabilities:
       - SYS_ADMIN
-    command: '/usr/sbin/init'
+    command: /lib/systemd/systemd
     groups:
-      - zookeeper-nodes
       - kafka-nodes
+      - zookeeper-nodes
+  - name: server-2
+    image: centos:7
+    networks:
+      - name: kafka
+        ipv4_address: '172.40.10.2'
+    etc_hosts: "{'server-1': '172.40.10.1', 'server-3': '172.40.10.3'}"
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: '/sbin/init'
+    capabilities:
+      - SYS_ADMIN
+    groups:
+      - kafka-nodes
+      - zookeeper-nodes
+  - name: server-3
+    image: registry.access.redhat.com/ubi8/ubi-init
+    networks:
+      - name: kafka
+        ipv4_address: '172.40.10.3'
+    etc_hosts: "{'server-1': '172.40.10.1', 'server-2': '172.40.10.2'}"
+    privileged: True
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: '/usr/lib/systemd/systemd'
+    pre_build_image: true
+    capabilities:
+      - SYS_ADMIN
+    groups:
+      - kafka-nodes
+      - zookeeper-nodes
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
-  playbooks:
-    prepare: prepare.yml
-verifier:
-  name: ansible
+  inventory:
+    group_vars:
+      kafka_zookeeper_connect: 'server-1:2181,server-2:2181,server-3:2181/kafka'
+      kafka_bootstrap_servers: 'server-1:9092,server-2:9092,server-3:9092'
+    host_vars:
+      server-1:
+        zookeeper_id: 1
+        kafka_broker_id: 0
+        kafka_listener_hostname: server-1
+      server-2:
+        zookeeper_id: 2
+        kafka_broker_id: 1
+        kafka_listener_hostname: server-2
+      server-3:
+        zookeeper_id: 3
+        kafka_broker_id: 2
+        kafka_listener_hostname: server-3
 lint: |
   set -e
-  yamllint . -c ./.yamllint.yaml
-  ansible-lint . -c ./.ansible-lint
+  yamllint -c ./.yamllint.yaml .
+  ansible-lint -c ./.ansible-lint .
+verifier:
+  name: ansible
 scenario:
   create_sequence:
     - dependency

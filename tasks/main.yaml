@@ -1,4 +1,12 @@
 ---
+- name: Load OS-specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - ../vars/{{ ansible_os_family }}.yml
+    - ../vars/{{ ansible_distribution_release }}.yml
+    - ../vars/empty.yml
+  tags:
+    - always
 
 - name: Create kafka group
   group:
@@ -25,7 +33,7 @@
 
 - name: Download Apache Kafka
   get_url:
-    url: http://www-eu.apache.org/dist/kafka/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz
+    url: "{{ kafka_download_base_url }}/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
     dest: /tmp
   when: not dir.stat.exists
   tags:
@@ -58,6 +66,7 @@
     state: directory
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
+    mode: 0755
   tags:
     - kafka_dirs
 
@@ -86,6 +95,7 @@
     state: directory
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
+    mode: 0755
   tags:
     - kafka_dirs
 
@@ -93,6 +103,9 @@
   template:
     src: server.properties.j2
     dest: '{{ kafka_dir }}/config/server.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   notify:
     - Restart kafka service
   tags:
@@ -102,6 +115,9 @@
   template:
     src: zookeeper.properties.j2
     dest: '{{ kafka_dir }}/config/zookeeper.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   tags:
     - kafka_config
 
@@ -109,6 +125,9 @@
   template:
     src: connect-standalone.properties.j2
     dest: '{{ kafka_dir }}/config/connect-standalone.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   tags:
     - kafka_config
 
@@ -116,6 +135,9 @@
   template:
     src: connect-distributed.properties.j2
     dest: '{{ kafka_dir }}/config/connect-distributed.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   tags:
     - kafka_config
 
@@ -123,6 +145,9 @@
   template:
     src: producer.properties.j2
     dest: '{{ kafka_dir }}/config/producer.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   tags:
     - kafka_config
 
@@ -130,6 +155,9 @@
   template:
     src: consumer.properties.j2
     dest: '{{ kafka_dir }}/config/consumer.properties'
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   tags:
     - kafka_config
 
@@ -187,7 +215,9 @@
   template:
     src: kafka.initd.j2
     dest: /etc/init.d/kafka
-    mode: 0755
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   notify:
     - Reload initd
     - Restart kafka service
@@ -195,13 +225,16 @@
   tags:
     - kafka_service
 
-- name: Template kafka systemd service file to /usr/lib/systemd/system/kafka.service
+- name: Template kafka systemd service
   template:
     src: kafka.service.j2
-    dest: /usr/lib/systemd/system/kafka.service
+    dest: "{{ kafka_unit_path }}"
+    group: '{{ kafka_group }}'
+    owner: '{{ kafka_user }}'
+    mode: 0644
   notify:
     - Restart kafka systemd
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version > '6'
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version > '6' or ansible_os_family == "Debian"
   tags:
     - kafka_service
 
@@ -210,6 +243,7 @@
     name: kafka
     state: started
     enabled: yes
+  when: kafka_start
   tags:
     - kafka_service
 

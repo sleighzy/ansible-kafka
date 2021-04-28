@@ -2,8 +2,13 @@
 # Based on ansible-lint config
 extends: default
 
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+
 ignore: |
   molecule-venv/
+  tests/roles/
 
 rules:
   braces:
