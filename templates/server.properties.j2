@@ -44,7 +44,7 @@ background.threads={{ kafka_background_threads }}
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
 #listeners=PLAINTEXT://:9092
-listeners={{ kafka_listener | join(",")}}
+listeners={{ kafka_listeners | join(",")}}
 
 # Hostname and port the broker will advertise to producers and consumers. If not set,
 # it uses the value for "listeners" if configured.  Otherwise, it will use the value
@@ -169,15 +169,15 @@ log.cleaner.backoff.ms={{ kafka_log_cleaner_backoff_ms }}
 # However, in production environments the default value of 3 seconds is more suitable as this will help to avoid unnecessary, and potentially expensive, rebalances during application startup.
 group.initial.rebalance.delay.ms={{ kafka_group_initial_rebalance_delay_ms }}
 
-{% if kafka_auth_listener is defined %}
+{% if kafka_listener_auth is defined %}
 ############################# AUTHENTICATION #############################
-  {% for type in kafka_auth_listener %}
-{{ type.name }} required \
+  {% for type in kafka_listener_auth %}
+    {{ type.name }} required \
   {% for user in type.users %}
-  user_{{ user.user }}="{{ user.pass }}" \
+    user_{{ user.user }}="{{ user.pass }}" \
   {% endfor %}
-  username="{{ type.username }}" \
-  password="{{ type.password }}";
+    username="{{ type.username }}" \
+    password="{{ type.password }}";
   {% endfor %}
 {% endif %}
 
