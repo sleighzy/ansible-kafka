@@ -39,17 +39,16 @@ kafka_background_threads: 10
 #   EXAMPLE:
 #     listeners = PLAINTEXT://your.host.name:9092
 #listeners=PLAINTEXT://:9092
-kafka_listener_protocol: PLAINTEXT
-kafka_listener_hostname: localhost
-kafka_listener_port: 9092
+kafka_listeners:
+  - "PLAINTEXT://:9092"
 
 # Hostname and port the broker will advertise to producers and consumers. If not set,
 # it uses the value for "listeners" if configured.  Otherwise, it will use the value
 # returned from java.net.InetAddress.getCanonicalHostName().
 #advertised.listeners=PLAINTEXT://your.host.name:9092
-kafka_advertised_listener_protocol: "{{ kafka_listener_protocol }}"
-kafka_advertised_listener_hostname: "{{ kafka_listener_hostname }}"
-kafka_advertised_listener_port: "{{ kafka_listener_port }}"
+# kafka_advertised_listeners:
+#   - "SASL_SSL://:9094"
+#   - "PLAINTEXT://:9092"
 
 # The number of threads handling network requests
 kafka_num_network_threads: 3
@@ -169,3 +168,25 @@ kafka_producer_compression_type: none
 
 kafka_consumer_group_id: kafka-consumer-group
 kafka_consumer_bootstrap_servers: "localhost:9092"
+
+# Example authentication
+############################# AUTHENTICATION #############################
+# kafka_listener_auth:
+#   - name: "listener.name.sasl_ssl.plain.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule"
+#     username: "admin"
+#     password: "admin-secret"
+#     users:
+#       - user: "test1"
+#         pass: "test1-secret"
+#       - user: "test2"
+#         pass: "test2-secret"
+#
+# kafka_sasl_enabled_mechanisms: "PLAIN"
+# kafka_ssl:
+#   cipher_suites: "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384"
+#   truststore_location: "/etc/security/broker.keystore.jks"
+#   truststore_password: "secret"
+#   keystore_location: "/etc/security/broker.keystore.jks"
+#   keystore_password: "secret"
+#   key_password: "secret"
+#   client_auth: "required"

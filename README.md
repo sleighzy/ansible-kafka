@@ -58,9 +58,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_broker_id                                | 0                                     |
 | kafka_java_heap                                | -Xms1G -Xmx1G                         |
 | kafka_background_threads                       | 10                                    |
-| kafka_listener_protocol                        | PLAINTEXT                             |
-| kafka_listener_hostname                        | localhost                             |
-| kafka_listener_port                            | 9092                                  |
+| kafka_listeners                                | PLAINTEXT://:9092                     |
 | kafka_num_network_threads                      | 3                                     |
 | kafka_num_io_threads                           | 8                                     |
 | kafka_num_replica_fetchers                     | 1                                     |
