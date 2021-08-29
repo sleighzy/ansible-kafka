@@ -5,6 +5,7 @@ dependency:
     ignore-certs: True
     ignore-errors: True
     role-file: molecule/default/requirements.yml
+    requirements-file: molecule/default/requirements.yml
 driver:
   name: docker
 platforms:
