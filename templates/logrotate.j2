@@ -1,0 +1,11 @@
+{{ kafka_root_dir }}/logs/*.log {
+	daily
+	size 100M
+	rotate 10
+	compress
+	delaycompress
+	missingok
+	copytruncate
+	create 644 {{ kafka_user }} {{ kafka_group }}
+	su {{ kafka_user }} {{ kafka_group }}
+}
