@@ -85,7 +85,8 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_bootstrap_servers                        | localhost:9092                        |
 | kafka_consumer_group_id                        | kafka-consumer-group                  |
 
-See [log4j.yml](./defaults/main/002-log4j.yml) for detailled log4j-related available variables.
+See [log4j.yml](./defaults/main/002-log4j.yml) for detailled 
+log4j-related available variables.
 
 ## Starting and Stopping Kafka services using systemd
 
