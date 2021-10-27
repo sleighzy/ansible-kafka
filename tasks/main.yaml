@@ -264,13 +264,3 @@
     state: absent
   tags:
     - kafka_cleanup
-
-- name: Create logrotate file
-  template:
-    src: logrotate.j2
-    dest: /etc/logrotate.d/kafka
-    owner: root
-    group: root
-    mode: 0644
-  tags:
-    - kafka_logrotate
