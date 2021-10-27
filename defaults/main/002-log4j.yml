@@ -1,0 +1,74 @@
+---
+log4j_rootlogger: "INFO, stdout, kafkaAppender"
+
+log4j_appender_stdout: "org.apache.log4j.ConsoleAppender"
+log4j_appender_stdout_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_stdout_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_kafkaappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_kafkaappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_kafkaappender_file: "${kafka.logs.dir}/server.log"
+log4j_appender_kafkaappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_kafkaappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_statechangeappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_statechangeappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_statechangeappender_file: "${kafka.logs.dir}/state-change.log"
+log4j_appender_statechangeappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_statechangeappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_requestappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_requestappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_requestappender_file: "${kafka.logs.dir}/kafka-request.log"
+log4j_appender_requestappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_requestappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_cleanerappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_cleanerappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_cleanerappender_file: "${kafka.logs.dir}/log-cleaner.log"
+log4j_appender_cleanerappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_cleanerappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_controllerappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_controllerappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_controllerappender_file: "${kafka.logs.dir}/controller.log"
+log4j_appender_controllerappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_controllerappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+log4j_appender_authorizerappender: "org.apache.log4j.DailyRollingFileAppender"
+log4j_appender_authorizerappender_datepattern: "'.'yyyy-MM-dd-HH"
+log4j_appender_authorizerappender_file: "${kafka.logs.dir}/kafka-authorizer.log"
+log4j_appender_authorizerappender_layout: "org.apache.log4j.PatternLayout"
+log4j_appender_authorizerappender_layout_conversionpattern: "[%d] %p %m (%c)%n"
+
+# Change the line below to adjust ZK client logging
+log4j_logger_org_apache_zookeeper: "INFO"
+
+# Change the two lines below to adjust the general broker logging level (output to server.log and stdout)
+log4j_logger_kafka: "INFO"
+log4j_logger_org_apache_kafka: "INFO"
+
+# Change to DEBUG or TRACE to enable request logging
+log4j_logger_kafka_request_logger: "WARN, requestAppender"
+log4j_additivity_kafka_request_logger: false
+
+# Uncomment the lines below and change log4j_logger_kafka_network_requestchannel$ to TRACE for additional output
+# related to the handling of requests
+#log4j_logger_kafka_network_processor: TRACE, requestAppender
+#log4j_logger_kafka_server_kafkaapis: TRACE, requestAppender
+#log4j_additivity_kafka_server_kafkaapis: false
+log4j_logger_kafka_network_requestchannel: "WARN, requestAppender"
+log4j_additivity_kafka_network_requestchannel: false
+
+log4j_logger_kafka_controller: "TRACE, controllerAppender"
+log4j_additivity_kafka_controller: false
+
+log4j_logger_kafka_log_logcleaner: "INFO, cleanerAppender"
+log4j_additivity_kafka_log_logcleaner: false
+
+log4j_logger_state_change_logger: "INFO, stateChangeAppender"
+log4j_additivity_state_change_logger: false
+
+# Access denials are logged at INFO level, change to DEBUG to also log allowed accesses
+log4j_logger_kafka_authorizer_logger: "INFO, authorizerAppender"
+log4j_additivity_kafka_authorizer_logger: false
