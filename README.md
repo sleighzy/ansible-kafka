@@ -3,7 +3,7 @@
 [![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
 ![Lint Code Base] ![Ansible Lint] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 2.8.0
+Ansible role to install and configure [Apache Kafka] 2.8.1
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -45,7 +45,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | Variable                                       | Default                               |
 | ---------------------------------------------- | ------------------------------------- |
 | kafka_download_base_url                        | <http://www-eu.apache.org/dist/kafka> |
-| kafka_version                                  | 2.8.0                                 |
+| kafka_version                                  | 2.8.1                                 |
 | kafka_scala_version                            | 2.13                                  |
 | kafka_create_user_group                        | true                                  |
 | kafka_user                                     | kafka                                 |
@@ -84,6 +84,9 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_zookeeper_connection_timeout             | 6000                                  |
 | kafka_bootstrap_servers                        | localhost:9092                        |
 | kafka_consumer_group_id                        | kafka-consumer-group                  |
+
+See [log4j.yml](./defaults/main/002-log4j.yml) for detailled  
+log4j-related available variables.
 
 ## Starting and Stopping Kafka services using systemd
 

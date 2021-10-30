@@ -90,7 +90,7 @@ provisioner:
 lint: |
   set -e
   yamllint -c ./.yamllint.yaml .
-  ansible-lint -c ./.ansible-lint .
+  ansible-lint -c ./.ansible-lint
 verifier:
   name: ansible
 scenario:
