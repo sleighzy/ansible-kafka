@@ -12,6 +12,7 @@
   group:
     name: '{{ kafka_group }}'
     state: present
+    system: yes
   when: kafka_create_user_group | bool
   tags:
     - kafka_group
@@ -22,6 +23,7 @@
     group: '{{ kafka_group }}'
     state: present
     createhome: no
+    system: yes
   when: kafka_create_user_group | bool
   tags:
     - kafka_user
