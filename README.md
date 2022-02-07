@@ -104,8 +104,8 @@ log4j-related available variables.
 | ------------------------------ | -------------------- |
 | ZooKeeper connection           | localhost:2181       |
 | Kafka bootstrap servers        | localhost:9092       |
-| Kafka consumer group Id        | kafka-consumer-group |
-| Kafka broker id                | 0                    |
+| Kafka consumer group ID        | kafka-consumer-group |
+| Kafka broker ID                | 0                    |
 | Number of partitions           | 1                    |
 | Data log file retention period | 168 hours            |
 | Enable auto topic creation     | false                |
