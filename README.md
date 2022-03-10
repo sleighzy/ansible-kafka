@@ -3,7 +3,7 @@
 [![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
 ![Lint Code Base] ![Ansible Lint] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 2.8.1
+Ansible role to install and configure [Apache Kafka] 3.1.0
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -24,7 +24,7 @@ elastically scaled with no downtime.
 ## Requirements
 
 - [Apache ZooKeeper]
-- Java 8 / 11
+- Java 8 (deprecated) / 11 / 17
 
 The below Apache ZooKeeper role from Ansible Galaxy can be used if one is
 needed.
@@ -45,7 +45,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | Variable                                       | Default                               |
 | ---------------------------------------------- | ------------------------------------- |
 | kafka_download_base_url                        | <http://www-eu.apache.org/dist/kafka> |
-| kafka_version                                  | 2.8.1                                 |
+| kafka_version                                  | 3.1.0                                 |
 | kafka_scala_version                            | 2.13                                  |
 | kafka_create_user_group                        | true                                  |
 | kafka_user                                     | kafka                                 |
