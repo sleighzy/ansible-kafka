@@ -64,11 +64,12 @@
 
 - name: Create directory for kafka data log files
   file:
-    path: '{{ kafka_data_log_dirs }}'
+    path: '{{ item }}'
     state: directory
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
     mode: 0755
+  with_items: "{{ kafka_data_log_dirs.split(',') }}"
   tags:
     - kafka_dirs
 
