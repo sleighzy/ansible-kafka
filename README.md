@@ -1,7 +1,7 @@
 # Apache Kafka
 
 [![Build Status]](https://travis-ci.org/sleighzy/ansible-kafka)
-![Lint Code Base] ![Ansible Lint] ![Molecule]
+![Lint Code Base] ![Molecule]
 
 Ansible role to install and configure [Apache Kafka] 3.1.0
 
@@ -198,8 +198,6 @@ molecule destroy
 
 [![MIT license]](https://lbesson.mit-license.org/)
 
-[ansible lint]:
-  https://github.com/sleighzy/ansible-kafka/workflows/Ansible%20Lint/badge.svg
 [ansible-lint]: https://docs.ansible.com/ansible-lint/
 [apache kafka]: http://kafka.apache.org/
 [apache zookeeper]: https://zookeeper.apache.org/
