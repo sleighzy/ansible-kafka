@@ -1,8 +1,8 @@
 ---
 # The Apache Kafka version to be downloaded and installed
 # kafka_download_base_url should be set to https://archive.apache.org/dist/kafka/ for older versions than the current
-kafka_download_base_url: http://www-eu.apache.org/dist/kafka
-kafka_version: 3.1.0
+kafka_download_base_url: https://dlcdn.apache.org/kafka
+kafka_version: 3.2.0
 kafka_scala_version: 2.13
 
 # The kafka user and group to create files/dirs with and for running the kafka service
