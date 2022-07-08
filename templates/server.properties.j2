@@ -15,7 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# see kafka.server.KafkaConfig for additional details and defaults
+# This configuration file is intended for use in ZK-based mode, where Apache ZooKeeper is required.
+# See kafka.server.KafkaConfig for additional details and defaults
 
 ############################# Server Basics #############################
 
@@ -37,8 +38,8 @@ background.threads={{ kafka_background_threads }}
 
 ############################# Socket Server Settings #############################
 
-# The address the socket server listens on. It will get the value returned from
-# java.net.InetAddress.getCanonicalHostName() if not configured.
+# The address the socket server listens on. If not configured, the host name will be equal to the value of
+# java.net.InetAddress.getCanonicalHostName(), with PLAINTEXT listener name, and port 9092.
 #   FORMAT:
 #     listeners = listener_name://host_name:port
 #   EXAMPLE:
@@ -46,9 +47,8 @@ background.threads={{ kafka_background_threads }}
 #listeners=PLAINTEXT://:9092
 listeners={{ kafka_listeners | join(",")}}
 
-# Hostname and port the broker will advertise to producers and consumers. If not set,
-# it uses the value for "listeners" if configured.  Otherwise, it will use the value
-# returned from java.net.InetAddress.getCanonicalHostName().
+# Listener name, hostname and port the broker will advertise to clients.
+# If not set, it uses the value for "listeners".
 #advertised.listeners=PLAINTEXT://your.host.name:9092
 {% if kafka_advertised_listeners is defined %}
 advertised.listeners={{ kafka_advertised_listeners | join(",")}}
