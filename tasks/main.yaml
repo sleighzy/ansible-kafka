@@ -1,6 +1,6 @@
 ---
 - name: Load OS-specific variables
-  include_vars: "{{ item }}"
+  include_vars: '{{ item }}'
   with_first_found:
     - ../vars/{{ ansible_os_family }}.yml
     - ../vars/{{ ansible_distribution_release }}.yml
@@ -35,8 +35,9 @@
 
 - name: Download Apache Kafka
   get_url:
-    url: "{{ kafka_download_base_url }}/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz"
+    url: '{{ kafka_download_base_url }}/{{ kafka_version }}/kafka_{{ kafka_scala_version }}-{{ kafka_version }}.tgz'
     dest: /tmp
+    validate_certs: '{{ kafka_download_validate_certs }}'
   when: not dir.stat.exists
   tags:
     - kafka_download
@@ -262,7 +263,7 @@
 - name: Template kafka systemd service
   template:
     src: kafka.service.j2
-    dest: "{{ kafka_unit_path }}"
+    dest: '{{ kafka_unit_path }}'
     group: '{{ kafka_group }}'
     owner: '{{ kafka_user }}'
     mode: 0644

@@ -45,6 +45,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | Variable                                       | Default                          |
 | ---------------------------------------------- | -------------------------------- |
 | kafka_download_base_url                        | <https://dlcdn.apache.org/kafka> |
+| kafka_download_validate_certs                  | yes                              |
 | kafka_version                                  | 3.2.0                            |
 | kafka_scala_version                            | 2.13                             |
 | kafka_create_user_group                        | true                             |
