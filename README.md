@@ -200,6 +200,7 @@ molecule destroy
 [![MIT license]](https://lbesson.mit-license.org/)
 
 [ansible-lint]: https://docs.ansible.com/ansible-lint/
+[ansible molecule]: https://molecule.readthedocs.io/
 [apache kafka]: http://kafka.apache.org/
 [apache zookeeper]: https://zookeeper.apache.org/
 [build status]: https://travis-ci.org/sleighzy/ansible-kafka.svg?branch=master
