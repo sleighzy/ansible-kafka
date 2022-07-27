@@ -42,8 +42,8 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 
 ## Role Variables
 
-| Variable                                       | Default                          |
-| ---------------------------------------------- | -------------------------------- |
+| Variable                                       | Default                          | Comments                                                         |
+|------------------------------------------------|----------------------------------|------------------------------------------------------------------|
 | kafka_download_base_url                        | <https://dlcdn.apache.org/kafka> |
 | kafka_download_validate_certs                  | yes                              |
 | kafka_version                                  | 3.2.0                            |
@@ -85,6 +85,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_zookeeper_connection_timeout             | 6000                             |
 | kafka_bootstrap_servers                        | localhost:9092                   |
 | kafka_consumer_group_id                        | kafka-consumer-group             |
+| kafka_config_params                            |                                  | General dictionary that will be templated into server.properties |
 
 See [log4j.yml](./defaults/main/002-log4j.yml) for detailed  
 log4j-related available variables.
