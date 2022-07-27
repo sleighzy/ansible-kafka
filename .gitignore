@@ -9,3 +9,6 @@ super-linter.log
 
 # Python virtual env for Molecule testing
 molecule-venv/
+
+# IntelliJ IDEA project files
+*.iml
