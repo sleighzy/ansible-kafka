@@ -9,6 +9,9 @@ Type=simple
 StandardOutput=null
 Environment="KAFKA_HEAP_OPTS={{ kafka_java_heap }}"
 Environment="LOG_DIR={{ kafka_log_dir }}"
+{% if kafka_jmx_port is defined %}
+Environment="JMX_PORT={{ kafka_jmx_port }}"
+{% endif %}
 ExecStart={{ kafka_dir }}/bin/kafka-server-start.sh /etc/kafka/server.properties
 ExecStop={{ kafka_dir }}/bin/kafka-server-stop.sh
 User={{ kafka_user }}
