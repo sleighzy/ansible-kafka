@@ -9,6 +9,9 @@ Type=simple
 StandardOutput=null
 Environment="KAFKA_HEAP_OPTS={{ kafka_java_heap }}"
 Environment="LOG_DIR={{ kafka_log_dir }}"
+{% if kafka_extra_args is defined %}
+Environment="EXTRA_ARGS={{ kafka_extra_args }}"
+{% endif %}
 {% if kafka_jmx_port is defined %}
 Environment="JMX_PORT={{ kafka_jmx_port }}"
 {% endif %}
