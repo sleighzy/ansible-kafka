@@ -2,7 +2,7 @@
 
 ![Lint Code Base] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 3.2.3
+Ansible role to install and configure [Apache Kafka] 3.5.1
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -10,6 +10,21 @@ by subscribing to these topics. Kafka is extremely fast, handling megabytes of
 reads and writes per second from thousands of clients. Messages are persisted
 and replicated to prevent data loss. Data streams are partitioned and can be
 elastically scaled with no downtime.
+
+## WARNING
+
+This Ansible role does not handle the migration process of upgrading from older
+versions of Kafka. Please ensure that you read the upgrade documentation and
+update the revelant configuration files before running this role.
+
+<https://kafka.apache.org/35/documentation.html#upgrade>
+
+For example, depending on how you upgrade, the `server.properties` file may need
+the following properties added to reflect your current version prior to running
+this Ansible playbook:
+
+- `inter.broker.protocol.version`
+- `log.message.format.version`
 
 ## Supported Platforms
 
@@ -45,7 +60,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | ---------------------------------------------- | ------------------------------------ |
 | kafka_download_base_url                        | <https://downloads.apache.org/kafka> |
 | kafka_download_validate_certs                  | yes                                  |
-| kafka_version                                  | 3.2.3                                |
+| kafka_version                                  | 3.5.1                                |
 | kafka_scala_version                            | 2.13                                 |
 | kafka_create_user_group                        | true                                 |
 | kafka_user                                     | kafka                                |
