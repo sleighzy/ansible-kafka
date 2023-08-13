@@ -193,3 +193,7 @@ ssl.keystore.password={{ kafka_ssl.keystore_password }}
 ssl.key.password={{ kafka_ssl.key_password }}
 ssl.client.auth={{ kafka_ssl.client_auth }}
 {% endif %}
+
+{% for key, value in (kafka_server_config_params | default({})).items() %}
+{{key}}={{value}}
+{% endfor %}
