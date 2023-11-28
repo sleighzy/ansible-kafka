@@ -192,6 +192,8 @@ ssl.keystore.location={{ kafka_ssl.keystore_location }}
 ssl.keystore.password={{ kafka_ssl.keystore_password }}
 ssl.key.password={{ kafka_ssl.key_password }}
 ssl.client.auth={{ kafka_ssl.client_auth }}
+ssl.truststore.type={{ kafka_ssl.truststore_type | default('jks') }}
+ssl.keystore.type={{ kafka_ssl.keystore_type | default('jks') }}
 {% endif %}
 
 {% for key, value in (kafka_server_config_params | default({})).items() %}
