@@ -31,7 +31,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible ansible-compat==0.5.0 docker "molecule-plugins[docker]"
+        run: pip3 install ansible docker "molecule-plugins[docker]"
 
       - name: Run Molecule tests.
         run: molecule test
