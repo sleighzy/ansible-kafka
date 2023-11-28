@@ -88,10 +88,6 @@ provisioner:
         zookeeper_id: 3
         kafka_broker_id: 2
         kafka_listener_hostname: server-3
-lint: |
-  set -e
-  yamllint -c ./.yamllint.yaml .
-  ansible-lint -c ./.ansible-lint
 verifier:
   name: ansible
 scenario:
@@ -114,7 +110,6 @@ scenario:
     - prepare
     - converge
   test_sequence:
-    - lint
     - destroy
     - dependency
     - syntax

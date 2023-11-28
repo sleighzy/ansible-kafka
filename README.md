@@ -160,6 +160,8 @@ Linting should be done using [ansible-lint].
 
 ```sh
 pip3 install ansible-lint --user
+
+ansible-lint -c ./.ansible-lint .
 ```
 
 ## Testing
@@ -212,7 +214,7 @@ molecule destroy
 
 ## License
 
-[![MIT license]](https://lbesson.mit-license.org/)
+![MIT license]
 
 [ansible-lint]: https://docs.ansible.com/ansible-lint/
 [ansible molecule]: https://molecule.readthedocs.io/
