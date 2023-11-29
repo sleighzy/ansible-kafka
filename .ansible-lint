@@ -2,5 +2,8 @@ exclude_paths:
   - ./molecule-venv/
   - ./tests/roles/
 
+mock_roles:
+  - sleighzy.zookeeper
+
 skip_list:
-  - '106'  # Role name does not match ``^[a-z][a-z0-9_]+$`` pattern
+  - '106' # Role name does not match ``^[a-z][a-z0-9_]+$`` pattern

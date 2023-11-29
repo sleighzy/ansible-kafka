@@ -20,12 +20,13 @@ platforms:
         ipv4_address: '172.40.10.1'
     etc_hosts: "{'server-2': '172.40.10.2', 'server-3': '172.40.10.3'}"
     pre_build_image: true
-    privileged: True
+    privileged: true
     tmpfs:
       - /run
       - /tmp
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
     capabilities:
       - SYS_ADMIN
     command: /lib/systemd/systemd
@@ -33,7 +34,7 @@ platforms:
       - kafka-nodes
       - zookeeper-nodes
   - name: server-2
-    image: centos:7
+    image: rockylinux:8
     networks:
       - name: kafka
         ipv4_address: '172.40.10.2'
@@ -42,8 +43,10 @@ platforms:
       - /run
       - /tmp
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: '/sbin/init'
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    command: '/usr/lib/systemd/systemd'
+    pre_build_image: true
     capabilities:
       - SYS_ADMIN
     groups:
@@ -55,12 +58,13 @@ platforms:
       - name: kafka
         ipv4_address: '172.40.10.3'
     etc_hosts: "{'server-1': '172.40.10.1', 'server-2': '172.40.10.2'}"
-    privileged: True
+    privileged: true
     tmpfs:
       - /run
       - /tmp
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
     command: '/usr/lib/systemd/systemd'
     pre_build_image: true
     capabilities:
@@ -88,10 +92,6 @@ provisioner:
         zookeeper_id: 3
         kafka_broker_id: 2
         kafka_listener_hostname: server-3
-lint: |
-  set -e
-  yamllint -c ./.yamllint.yaml .
-  ansible-lint -c ./.ansible-lint
 verifier:
   name: ansible
 scenario:
@@ -114,7 +114,6 @@ scenario:
     - prepare
     - converge
   test_sequence:
-    - lint
     - destroy
     - dependency
     - syntax

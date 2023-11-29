@@ -5,25 +5,32 @@
 
   pre_tasks:
     - name: Install Java 8 (OpenJDK) on RedHat/CentOS
-      yum:
+      ansible.builtin.yum:
         name: java-1.8.0-openjdk
         state: installed
       when: ansible_os_family == "RedHat"
 
     - name: Install Java 11 (OpenJDK) on Debian
-      apt:
+      ansible.builtin.apt:
         name: openjdk-11-jdk
         state: present
         update_cache: yes
       when: ansible_os_family == "Debian"
 
-    # The installation of this package into the Debian container means
+    # The installation of this package into the container means
     # that the "ps" command is available for viewing the running process.
     # Installing this package however also prevents an issue whereby the
     # ZooKeeper service is constantly restarted by systemd which causes
     # the Molecule tests to fail as the service is not started correctly.
     - name: Install ps on Debian
-      apt:
+      ansible.builtin.apt:
         name: procps
         state: present
       when: ansible_os_family == "Debian"
+
+    - name: Install ps on Rocky Linux
+      ansible.builtin.yum:
+        name: procps
+        state: present
+        use_backend: dnf
+      when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"

@@ -3,26 +3,26 @@
 
   tasks:
     - name: Get users
-      getent:
+      ansible.builtin.getent:
         database: passwd
 
     - name: Get groups
-      getent:
+      ansible.builtin.getent:
         database: group
 
     - name: Assert that user and group 'kafka' exists
-      assert:
+      ansible.builtin.assert:
         that:
           - "'kafka' in getent_passwd"
           - "'kafka' in getent_group"
 
     - name: Register '/opt/kafka_2.13-3.5.1' installation directory status
-      stat:
+      ansible.builtin.stat:
         path: '/opt/kafka_2.13-3.5.1'
       register: install_dir
 
     - name: Assert that '/opt/kafka_2.13-3.5.1' directory is created
-      assert:
+      ansible.builtin.assert:
         that:
           - install_dir.stat.exists
           - install_dir.stat.isdir
@@ -30,24 +30,24 @@
           - install_dir.stat.gr_name == 'kafka'
 
     - name: Register '/opt/kafka' symlink directory status
-      stat:
+      ansible.builtin.stat:
         path: '/opt/kafka'
       register: kafka_dir
 
     - name: Assert that '/opt/kafka' symlink is created
-      assert:
+      ansible.builtin.assert:
         that:
           - kafka_dir.stat.exists
           - kafka_dir.stat.islnk
           - kafka_dir.stat.lnk_target == '/opt/kafka_2.13-3.5.1'
 
     - name: Register '/var/log/kafka' directory status
-      stat:
+      ansible.builtin.stat:
         path: '/var/log/kafka'
       register: kafka_log_dir
 
     - name: Assert that '/var/log/kafka' directory is created
-      assert:
+      ansible.builtin.assert:
         that:
           - kafka_log_dir.stat.exists
           - kafka_log_dir.stat.isdir
@@ -55,12 +55,12 @@
           - kafka_log_dir.stat.gr_name == 'kafka'
 
     - name: Register '/opt/kafka/logs' symlink directory status
-      stat:
+      ansible.builtin.stat:
         path: '/opt/kafka/logs'
       register: application_logs_symlink
 
     - name: Assert that '/opt/kafka/logs' symlink is created
-      assert:
+      ansible.builtin.assert:
         that:
           - application_logs_symlink.stat.exists
           - application_logs_symlink.stat.islnk
@@ -69,12 +69,12 @@
           - application_logs_symlink.stat.gr_name == 'kafka'
 
     - name: Register '/etc/kafka' directory status
-      stat:
+      ansible.builtin.stat:
         path: '/etc/kafka'
       register: config_dir
 
     - name: Assert that '/etc/kafka' directory is created
-      assert:
+      ansible.builtin.assert:
         that:
           - config_dir.stat.exists
           - config_dir.stat.isdir
@@ -82,10 +82,10 @@
           - config_dir.stat.gr_name == 'kafka'
 
     - name: Populate service facts
-      service_facts:
+      ansible.builtin.service_facts:
 
     - name: Assert that Kafka service is installed, running, and enabled
-      assert:
+      ansible.builtin.assert:
         that:
           - "'kafka.service' in ansible_facts.services"
           - ansible_facts.services['kafka.service'].state == 'running'

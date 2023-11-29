@@ -21,17 +21,17 @@ jobs:
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: 'sleighzy.kafka'
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible ansible-compat==0.5.0 ansible-lint yamllint docker molecule-docker "molecule[docker,lint]"
+        run: pip3 install ansible docker "molecule-plugins[docker]"
 
       - name: Run Molecule tests.
         run: molecule test
