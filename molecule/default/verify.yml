@@ -42,7 +42,7 @@
           - kafka_dir.stat.lnk_target == '/opt/kafka_2.13-3.5.1'
 
     - name: Register '/var/log/kafka' directory status
-      stat:
+      ansible.builtin.stat:
         path: '/var/log/kafka'
       register: kafka_log_dir
 

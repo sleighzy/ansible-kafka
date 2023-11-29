@@ -85,7 +85,7 @@
   tags:
     - kafka_dirs
 
-- name: Register directory status for {{ kafka_dir }}/logs
+- name: Register directory status for application log files
   ansible.builtin.stat:
     path: '{{ kafka_dir }}/logs'
   register: application_logs_dir
