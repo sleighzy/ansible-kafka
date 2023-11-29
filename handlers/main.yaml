@@ -1,15 +1,16 @@
 ---
 - name: Reload initd
-  command: initctl reload-configuration
+  ansible.builtin.command: initctl reload-configuration
+  changed_when: false
 
 - name: Restart kafka service
-  service:
+  ansible.builtin.service:
     name: kafka
     state: restarted
   when: kafka_restart
 
 - name: Restart kafka systemd
-  systemd:
+  ansible.builtin.systemd:
     name: kafka
     state: restarted
     daemon_reload: yes
