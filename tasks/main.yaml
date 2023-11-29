@@ -1,6 +1,6 @@
 ---
 - name: Load OS-specific variables
-  include_vars: '{{ item }}'
+  ansible.builtin.include_vars: '{{ item }}'
   with_first_found:
     - ../vars/{{ ansible_os_family }}.yml
     - ../vars/{{ ansible_distribution_release }}.yml
@@ -85,7 +85,7 @@
   tags:
     - kafka_dirs
 
-- name: Register directory status for '{{ kafka_dir}}/logs'
+- name: Register directory status for {{ kafka_dir }}/logs
   ansible.builtin.stat:
     path: '{{ kafka_dir }}/logs'
   register: application_logs_dir

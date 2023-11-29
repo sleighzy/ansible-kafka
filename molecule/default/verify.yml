@@ -10,7 +10,7 @@
       ansible.builtin.getent:
         database: group
 
-    - name: ansible.builtin.assert that user and group 'kafka' exists
+    - name: Assert that user and group 'kafka' exists
       ansible.builtin.assert:
         that:
           - "'kafka' in getent_passwd"
@@ -21,7 +21,7 @@
         path: '/opt/kafka_2.13-3.5.1'
       register: install_dir
 
-    - name: ansible.builtin.assert that '/opt/kafka_2.13-3.5.1' directory is created
+    - name: Assert that '/opt/kafka_2.13-3.5.1' directory is created
       ansible.builtin.assert:
         that:
           - install_dir.stat.exists
@@ -34,7 +34,7 @@
         path: '/opt/kafka'
       register: kafka_dir
 
-    - name: ansible.builtin.assert that '/opt/kafka' symlink is created
+    - name: Assert that '/opt/kafka' symlink is created
       ansible.builtin.assert:
         that:
           - kafka_dir.stat.exists
@@ -46,7 +46,7 @@
         path: '/var/log/kafka'
       register: kafka_log_dir
 
-    - name: ansible.builtin.assert that '/var/log/kafka' directory is created
+    - name: Assert that '/var/log/kafka' directory is created
       ansible.builtin.assert:
         that:
           - kafka_log_dir.stat.exists
@@ -59,7 +59,7 @@
         path: '/opt/kafka/logs'
       register: application_logs_symlink
 
-    - name: ansible.builtin.assert that '/opt/kafka/logs' symlink is created
+    - name: Assert that '/opt/kafka/logs' symlink is created
       ansible.builtin.assert:
         that:
           - application_logs_symlink.stat.exists
@@ -73,7 +73,7 @@
         path: '/etc/kafka'
       register: config_dir
 
-    - name: ansible.builtin.assert that '/etc/kafka' directory is created
+    - name: Assert that '/etc/kafka' directory is created
       ansible.builtin.assert:
         that:
           - config_dir.stat.exists
@@ -84,7 +84,7 @@
     - name: Populate service facts
       ansible.builtin.service_facts:
 
-    - name: ansible.builtin.assert that Kafka service is installed, running, and enabled
+    - name: Assert that Kafka service is installed, running, and enabled
       ansible.builtin.assert:
         that:
           - "'kafka.service' in ansible_facts.services"
