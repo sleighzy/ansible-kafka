@@ -17,7 +17,7 @@
         update_cache: yes
       when: ansible_os_family == "Debian"
 
-    # The installation of this package into the Debian container means
+    # The installation of this package into the container means
     # that the "ps" command is available for viewing the running process.
     # Installing this package however also prevents an issue whereby the
     # ZooKeeper service is constantly restarted by systemd which causes
@@ -27,3 +27,10 @@
         name: procps
         state: present
       when: ansible_os_family == "Debian"
+
+    - name: Install ps on Rocky Linux
+      ansible.builtin.yum:
+        name: procps
+        state: present
+        use_backend: dnf
+      when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"
