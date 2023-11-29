@@ -3,7 +3,7 @@ exclude_paths:
   - ./tests/roles/
 
 mock_roles:
-  - role: sleighzy.zookeeper
+  - sleighzy.zookeeper
 
 skip_list:
   - '106' # Role name does not match ``^[a-z][a-z0-9_]+$`` pattern
