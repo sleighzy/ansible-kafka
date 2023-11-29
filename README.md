@@ -178,7 +178,7 @@ install Molecule including the Docker driver.
 ```sh
 $ python3 -m venv molecule-venv
 $ source molecule-venv/bin/activate
-(molecule-venv) $ python3 -m pip install molecule-docker "molecule[docker,lint]"
+(molecule-venv) $ pip3 install ansible docker "molecule-plugins[docker]"
 ```
 
 Run playbook and tests. Linting errors need to be corrected before Molecule will
