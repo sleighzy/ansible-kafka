@@ -191,3 +191,6 @@ kafka_consumer_bootstrap_servers: "localhost:9092"
 #   keystore_password: "secret"
 #   key_password: "secret"
 #   client_auth: "required"
+
+# Here you can define custom opts e.g. settings for JMX Exporter
+# kafka_opts: ""
