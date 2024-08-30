@@ -34,7 +34,7 @@ platforms:
       - kafka-nodes
       - zookeeper-nodes
   - name: server-2
-    image: rockylinux:8
+    image: redhat/ubi9:latest
     networks:
       - name: kafka
         ipv4_address: '172.40.10.2'
@@ -53,7 +53,7 @@ platforms:
       - kafka-nodes
       - zookeeper-nodes
   - name: server-3
-    image: registry.access.redhat.com/ubi8/ubi-init
+    image: redhat/ubi9:latest
     networks:
       - name: kafka
         ipv4_address: '172.40.10.3'
