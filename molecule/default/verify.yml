@@ -16,12 +16,12 @@
           - "'kafka' in getent_passwd"
           - "'kafka' in getent_group"
 
-    - name: Register '/opt/kafka_2.13-3.5.1' installation directory status
+    - name: Register '/opt/kafka_2.13-3.5.2' installation directory status
       ansible.builtin.stat:
-        path: '/opt/kafka_2.13-3.5.1'
+        path: '/opt/kafka_2.13-3.5.2'
       register: install_dir
 
-    - name: Assert that '/opt/kafka_2.13-3.5.1' directory is created
+    - name: Assert that '/opt/kafka_2.13-3.5.2' directory is created
       ansible.builtin.assert:
         that:
           - install_dir.stat.exists
@@ -39,7 +39,7 @@
         that:
           - kafka_dir.stat.exists
           - kafka_dir.stat.islnk
-          - kafka_dir.stat.lnk_target == '/opt/kafka_2.13-3.5.1'
+          - kafka_dir.stat.lnk_target == '/opt/kafka_2.13-3.5.2'
 
     - name: Register '/var/log/kafka' directory status
       ansible.builtin.stat:
