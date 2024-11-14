@@ -2,7 +2,7 @@
 
 ![Lint Code Base] ![Molecule]
 
-Ansible role to install and configure [Apache Kafka] 3.5.2
+Ansible role to install and configure [Apache Kafka] 3.8
 
 [Apache Kafka] is a distributed event streaming platform using publish-subscribe
 topics. Applications and streaming components can produce and consume messages
@@ -60,7 +60,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | ---------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------- |
 | kafka_download_base_url                        | <https://downloads.apache.org/kafka> |                                                                  |
 | kafka_download_validate_certs                  | yes                                  |                                                                  |
-| kafka_version                                  | 3.5.2                                |                                                                  |
+| kafka_version                                  | 3.8.1                                |                                                                  |
 | kafka_scala_version                            | 2.13                                 |                                                                  |
 | kafka_create_user_group                        | true                                 |                                                                  |
 | kafka_user                                     | kafka                                |                                                                  |
