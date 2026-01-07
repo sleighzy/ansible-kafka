@@ -10,9 +10,9 @@
         state: installed
       when: ansible_os_family == "RedHat"
 
-    - name: Install Java 11 (OpenJDK) on Debian
+    - name: Install Java on Debian
       ansible.builtin.apt:
-        name: openjdk-11-jdk
+        name: default-jre
         state: present
         update_cache: yes
       when: ansible_os_family == "Debian"

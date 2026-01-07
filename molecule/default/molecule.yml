@@ -10,7 +10,7 @@ driver:
   name: docker
 platforms:
   - name: server-1
-    image: geerlingguy/docker-debian10-ansible:latest
+    image: geerlingguy/docker-debian13-ansible:latest
     docker_networks:
       - name: kafka
         ipam_config:
