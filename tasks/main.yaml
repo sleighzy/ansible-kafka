@@ -2,8 +2,8 @@
 - name: Load OS-specific variables
   ansible.builtin.include_vars: '{{ item }}'
   with_first_found:
-    - ../vars/{{ ansible_os_family }}.yml
-    - ../vars/{{ ansible_distribution_release }}.yml
+    - ../vars/{{ ansible_facts["os_family"] }}.yml
+    - ../vars/{{ ansible_facts["distribution_release"] }}.yml
     - ../vars/empty.yml
   tags:
     - always
@@ -257,7 +257,7 @@
   notify:
     - Reload initd
     - Restart kafka service
-  when: ansible_os_family == "RedHat" and (ansible_distribution_major_version | int) == 6
+  when: ansible_facts["os_family"] == "RedHat" and (ansible_facts["distribution_major_version"] | int) == 6
   tags:
     - kafka_service
 
@@ -270,7 +270,7 @@
     mode: 0644
   notify:
     - Restart kafka systemd
-  when: ansible_os_family == "RedHat" and (ansible_distribution_major_version | int) > 6 or ansible_os_family == "Debian"
+  when: ansible_facts["os_family"] == "RedHat" and (ansible_facts["distribution_major_version"] | int) > 6 or ansible_facts["os_family"] == "Debian"
   tags:
     - kafka_service
 

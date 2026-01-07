@@ -8,14 +8,14 @@
       ansible.builtin.yum:
         name: java-1.8.0-openjdk
         state: installed
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts["os_family"] == "RedHat"
 
-    - name: Install Java 11 (OpenJDK) on Debian
+    - name: Install Java on Debian
       ansible.builtin.apt:
-        name: openjdk-11-jdk
+        name: default-jre
         state: present
         update_cache: yes
-      when: ansible_os_family == "Debian"
+      when: ansible_facts["os_family"] == "Debian"
 
     # The installation of this package into the container means
     # that the "ps" command is available for viewing the running process.
@@ -26,10 +26,10 @@
       ansible.builtin.apt:
         name: procps
         state: present
-      when: ansible_os_family == "Debian"
+      when: ansible_facts["os_family"] == "Debian"
 
     - name: Install ps on RedHat/CentOS
       ansible.builtin.yum:
         name: procps
         state: present
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts["os_family"] == "RedHat"
