@@ -89,6 +89,7 @@ See <https://github.com/ansible/ansible/issues/71528> for more information.
 | kafka_transaction_state_log_replication_factor | 1                                    |                                                                  |
 | kafka_transaction_state_log_min_isr            | 1                                    |                                                                  |
 | kafka_log_retention_hours                      | 168                                  |                                                                  |
+| kafka_log_retention_bytes                      | -1                                   |                                                                  |
 | kafka_log_segment_bytes                        | 1073741824                           |                                                                  |
 | kafka_log_retention_check_interval_ms          | 300000                               |                                                                  |
 | kafka_auto_create_topics_enable                | false                                |                                                                  |

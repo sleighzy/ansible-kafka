@@ -91,6 +91,9 @@ kafka_transaction_state_log_min_isr: 1
 # The minimum age of a log file to be eligible for deletion
 kafka_log_retention_hours: 168
 
+# The amount of data to retain in the log for each topic-partitions.
+kafka_log_retention_bytes: -1
+
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
 kafka_log_segment_bytes: 1073741824
 
