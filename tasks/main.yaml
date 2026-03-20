@@ -265,8 +265,8 @@
   ansible.builtin.template:
     src: kafka.service.j2
     dest: '{{ kafka_unit_path }}'
-    group: '{{ kafka_group }}'
-    owner: '{{ kafka_user }}'
+    group: root
+    owner: root
     mode: 0644
   notify:
     - Restart kafka systemd
